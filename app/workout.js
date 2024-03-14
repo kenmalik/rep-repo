@@ -15,6 +15,12 @@ export default function Workout({ name, exercises }) {
         ]);
     }
 
+    function handleDelete(id) {
+        setExerciseList(exerciseList.filter((exercise) =>
+            exercise.id !== id
+        ));
+    }
+
     return (
         <>
             <div className="bg-gray-300 text-black py-6 px-12 flex justify-between items-center">
@@ -23,7 +29,7 @@ export default function Workout({ name, exercises }) {
             </div>
             {isEditing && <AddExercise onAdd={handleAdd} />}
             {exerciseList.map((exercise) =>
-                <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} />
+                <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} onDelete={handleDelete} />
             )}
         </>
     );

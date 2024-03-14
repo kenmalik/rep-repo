@@ -30,7 +30,7 @@ export default function Exercise({ exercise, onDelete, isEditable }) {
                 </label>
             </form>
 
-            {isEditable && <button onClick={onDelete}>Delete</button>}
+            {isEditable && <button onClick={() => onDelete(exercise.id)}>Delete</button>}
         </div>
     );
 }
