@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Exercise from "./exercise.js"
+import { v4 as uuidv4 } from "uuid"
 
 export default function Workout({ name, exercises }) {
     let [exerciseList, setExerciseList] = useState(exercises);
@@ -39,7 +40,7 @@ export function AddExercise({ onAdd }) {
             onSubmit={(e) => {
                 e.preventDefault();
                 onAdd({
-                    name: name, weight: weight, group: group, isEditable: false
+                    name: name, weight: weight, group: group, isEditable: false, id: uuidv4()
                 })
                 setName("");
                 setWeight(0);
