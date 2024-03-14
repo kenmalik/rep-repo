@@ -3,14 +3,25 @@
 import { useState } from "react";
 
 export default function Exercise({ exercise, onDelete, isEditable }) {
+    let [name, setName] = useState(exercise.name)
     let [weight, setWeight] = useState(exercise.weight)
-    let [isEditing, setIsEditing] = useState(false)
+    let [group, setGroup] = useState(exercise.group)
 
     return (
         <div className="bg-white text-black py-3 flex justify-between px-12">
             <form onSubmit={(e) => e.preventDefault()} className="flex gap-8 items-center">
                 <label >
-                    <b>Exercise:</b> {exercise.name}
+                    <b>Exercise:</b>
+                    {" "}
+                    {isEditable ?
+                        <input type="text"
+                            value={name}
+                            className="bg-gray-200 p-1 w-32"
+                            onChange={(e) => {
+                                setName(e.target.value);
+                            }} />
+                        : name
+                    }
                 </label>
                 <label>
                     <b>Weight:</b>
@@ -20,13 +31,23 @@ export default function Exercise({ exercise, onDelete, isEditable }) {
                             value={weight}
                             className="bg-gray-200 p-1 w-16"
                             onChange={(e) => {
-                                setWeight(e.target.value);
+                                setWeight(Number(e.target.value));
                             }} />
                         : weight
                     }
                 </label>
                 <label >
-                    <b>Group:</b> {exercise.group}
+                    <b>Group:</b>
+                    {" "}
+                    {isEditable ?
+                        <input type="text"
+                            value={group}
+                            className="bg-gray-200 p-1 w-32"
+                            onChange={(e) => {
+                                setGroup(e.target.value);
+                            }} />
+                        : group
+                    }
                 </label>
             </form>
 

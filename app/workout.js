@@ -71,7 +71,7 @@ export function AddExercise({ onAdd }) {
             <label>
                 Weight:
                 {" "}
-                <input type="number" value={weight} onChange={(e) => setWeight(e.target.value)} />
+                <input type="number" value={weight} onChange={(e) => setWeight(Number(e.target.value))} />
             </label>
             <label>
                 Group:
