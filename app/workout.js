@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid"
 export default function Workout({ name, exercises }) {
     let [exerciseList, setExerciseList] = useState(exercises);
     let [isEditing, setIsEditing] = useState(false);
+    let [title, setTitle] = useState(name);
 
     function handleAdd(exercise) {
         setExerciseList([
@@ -23,10 +24,18 @@ export default function Workout({ name, exercises }) {
 
     return (
         <>
-            <div className="bg-gray-300 text-black py-6 px-12 flex justify-between items-center">
-                <h1 className="font-bold text-3xl">{name}</h1>
-                <button onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Finish Edits" : "Edit"}</button>
-            </div>
+            <form
+                className="bg-gray-300 text-black py-6 px-12 flex justify-between items-center"
+                onSubmit={(e) => {
+                    e.preventDefault();
+                }}
+            >
+                {isEditing ?
+                    <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} className="font-bold text-3xl px-3 py-1" />
+                    : <h1 className="font-bold text-3xl">{title}</h1>
+                }
+                <button type="submit" onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Finish Edits" : "Edit"}</button>
+            </form>
             {isEditing && <AddExercise onAdd={handleAdd} />}
             {exerciseList.map((exercise) =>
                 <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} onDelete={handleDelete} />

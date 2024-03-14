@@ -4,3 +4,9 @@ export const data = [{
     weight: 200,
     group: "Lower",
 }]
+
+export const mockWorkouts = [{
+    id: 0,
+    name: "Test",
+    exercises: data,
+}]
