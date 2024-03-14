@@ -5,6 +5,7 @@ import Exercise from "./exercise.js"
 
 export default function Workout({ name, exercises }) {
     let [exerciseList, setExerciseList] = useState(exercises);
+    let [isEditing, setIsEditing] = useState(false);
 
     function handleAdd(exercise) {
         setExerciseList([
@@ -15,12 +16,13 @@ export default function Workout({ name, exercises }) {
 
     return (
         <>
-            <div className="bg-gray-300 text-black py-3 px-12">
+            <div className="bg-gray-300 text-black py-6 px-12 flex justify-between items-center">
                 <h1 className="font-bold text-3xl">{name}</h1>
+                <button onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Finish Edits" : "Edit"}</button>
             </div>
-            <AddExercise onAdd={handleAdd} />
+            {isEditing && <AddExercise onAdd={handleAdd} />}
             {exerciseList.map((exercise) =>
-                <Exercise exercise={exercise} key={exercise.id} />
+                <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} />
             )}
         </>
     );
@@ -37,7 +39,7 @@ export function AddExercise({ onAdd }) {
             onSubmit={(e) => {
                 e.preventDefault();
                 onAdd({
-                    name: name, weight: weight, group: group
+                    name: name, weight: weight, group: group, isEditable: false
                 })
                 setName("");
                 setWeight(0);

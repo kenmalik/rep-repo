@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function Exercise({ exercise, onDelete }) {
+export default function Exercise({ exercise, onDelete, isEditable }) {
     let [weight, setWeight] = useState(exercise.weight)
     let [isEditing, setIsEditing] = useState(false)
 
@@ -15,7 +15,7 @@ export default function Exercise({ exercise, onDelete }) {
                 <label>
                     <b>Weight:</b>
                     {" "}
-                    {isEditing ?
+                    {isEditable ?
                         <input type="number"
                             value={weight}
                             className="bg-gray-200 p-1 w-16"
@@ -30,10 +30,7 @@ export default function Exercise({ exercise, onDelete }) {
                 </label>
             </form>
 
-            <div className="flex gap-4">
-                <button onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Finish" : "Edit"}</button>
-                <button onClick={onDelete}>Delete</button>
-            </div>
+            {isEditable && <button onClick={onDelete}>Delete</button>}
         </div>
     );
 }
