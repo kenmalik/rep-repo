@@ -23,15 +23,15 @@ export default function Workout({ name, exercises }) {
     }
 
     return (
-        <>
+        <div className="mb-20 rounded-xl overflow-hidden">
             <form
-                className="bg-gray-300 text-black py-6 px-12 flex justify-between items-center"
+                className="bg-gray-300 text-gray-800 py-8 px-12 flex justify-between items-center"
                 onSubmit={(e) => {
                     e.preventDefault();
                 }}
             >
                 {isEditing ?
-                    <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} className="font-bold text-3xl px-3 py-1" />
+                    <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} className="font-bold text-3xl px-4 py-2" />
                     : <h1 className="font-bold text-3xl">{title}</h1>
                 }
                 <button type="submit" onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Finish Edits" : "Edit"}</button>
@@ -40,7 +40,7 @@ export default function Workout({ name, exercises }) {
             {exerciseList.map((exercise) =>
                 <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} onDelete={handleDelete} />
             )}
-        </>
+        </div>
     );
 }
 
@@ -51,7 +51,7 @@ export function AddExercise({ onAdd }) {
 
     return (
         <form
-            className="bg-gray-300 text-black py-3 flex gap-6 px-12"
+            className="bg-gray-300 text-gray-800 pt-2 pb-8 flex gap-6 px-12"
             onSubmit={(e) => {
                 e.preventDefault();
                 onAdd({
@@ -78,7 +78,7 @@ export function AddExercise({ onAdd }) {
                 {" "}
                 <input value={group} onChange={(e) => setGroup(e.target.value)} />
             </label>
-            <button type="submit">Add</button>
+            <button type="submit"><b>Add</b></button>
         </form>
     );
 }

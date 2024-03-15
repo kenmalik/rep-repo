@@ -8,7 +8,7 @@ export default function Exercise({ exercise, onDelete, isEditable }) {
     let [group, setGroup] = useState(exercise.group)
 
     return (
-        <div className="bg-white text-black py-3 flex justify-between px-12">
+        <div className="bg-white text-gray-800 py-7 flex justify-between px-12">
             <form onSubmit={(e) => e.preventDefault()} className="flex gap-8 items-center">
                 <label >
                     <b>Exercise:</b>
