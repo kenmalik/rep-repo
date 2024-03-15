@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Exercise({ exercise, onDelete, isEditable }) {
     let [name, setName] = useState(exercise.name);
@@ -10,9 +11,9 @@ export default function Exercise({ exercise, onDelete, isEditable }) {
 
     return (
         <div className="bg-white text-gray-800 py-7">
-            <div className="flex justify-between px-12">
+            <div className="flex justify-between flex-wrap px-12">
                 <form onSubmit={(e) => e.preventDefault()} className="flex gap-8 items-center">
-                    <button onClick={() => setIsExpanded(!isExpanded)}>{isExpanded ? "^" : ">"}</button>
+                    <button onClick={() => setIsExpanded(!isExpanded)} className="w-4">{isExpanded ? "^" : ">"}</button>
                     <label >
                         <b>Exercise:</b>
                         {" "}
@@ -70,7 +71,7 @@ function Dropdown({ weight }) {
             <h2>Percentages</h2>
             <div className="flex flex-col ml-2 gap-2">
                 {percentages.map((percentage) =>
-                    <p>
+                    <p key={uuidv4()}>
                         <b>{percentage}:</b>
                         {" "}
                         {(percentage / parseFloat(100) * weight).toFixed(1)}
