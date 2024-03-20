@@ -7,7 +7,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid"
 
 export default function Home() {
-    let [workouts, setWorkouts] = useState(mockWorkouts);
+    let [workouts, setWorkouts] = useState([]);
 
     function handleAddWorkout() {
         setWorkouts([
@@ -34,11 +34,14 @@ export default function Home() {
                     <Workout workoutId={workout.id} name={workout.name} key={workout.id} exercises={workout.exercises} onDelete={handleDeleteWorkout} />
                 )}
             </main>
-            <button className="fixed right-12 bottom-8 text-6xl bg-green-600 
+            <div className="flex items-center gap-4 fixed right-12 bottom-8">
+                {workouts.length === 0 && <p className="italic animate-pulse">Click here to add a workout -&gt;</p>}
+                <button className="text-6xl bg-green-600 
                 rounded-full flex justify-center w-16 h-16 hover:bg-green-700"
-                onClick={handleAddWorkout}>
-                +
-            </button>
+                    onClick={handleAddWorkout}>
+                    +
+                </button>
+            </div>
         </>
     );
 }

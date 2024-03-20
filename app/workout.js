@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid"
 
 export default function Workout({ name, exercises, onDelete, workoutId }) {
     let [exerciseList, setExerciseList] = useState(exercises);
-    let [isEditing, setIsEditing] = useState(false);
+    let [isEditing, setIsEditing] = useState(true);
     let [title, setTitle] = useState(name);
 
     function handleAddExercise(exercise) {
