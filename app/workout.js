@@ -4,19 +4,19 @@ import { useState } from "react";
 import Exercise from "./exercise.js"
 import { v4 as uuidv4 } from "uuid"
 
-export default function Workout({ name, exercises }) {
+export default function Workout({ name, exercises, onDelete, workoutId }) {
     let [exerciseList, setExerciseList] = useState(exercises);
     let [isEditing, setIsEditing] = useState(false);
     let [title, setTitle] = useState(name);
 
-    function handleAdd(exercise) {
+    function handleAddExercise(exercise) {
         setExerciseList([
             ...exerciseList,
             exercise
         ]);
     }
 
-    function handleDelete(id) {
+    function handleDeleteExercise(id) {
         setExerciseList(exerciseList.filter((exercise) =>
             exercise.id !== id
         ));
@@ -34,11 +34,14 @@ export default function Workout({ name, exercises }) {
                     <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} className="font-bold text-3xl px-4 py-2" />
                     : <h1 className="font-bold text-3xl">{title}</h1>
                 }
-                <button type="submit" onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Finish Edits" : "Edit"}</button>
+                <div className="flex gap-6">
+                    {isEditing && <button type="button" onClick={() => onDelete(workoutId)}>Delete Workout</button>}
+                    <button type="submit" onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Finish Edits" : "Edit"}</button>
+                </div>
             </form>
-            {isEditing && <AddExercise onAdd={handleAdd} />}
+            {isEditing && <AddExercise onAdd={handleAddExercise} />}
             {exerciseList.map((exercise) =>
-                <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} onDelete={handleDelete} />
+                <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} onDelete={handleDeleteExercise} />
             )}
         </div>
     );
