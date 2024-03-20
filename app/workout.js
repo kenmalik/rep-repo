@@ -52,6 +52,8 @@ export function AddExercise({ onAdd }) {
     let [weight, setWeight] = useState(0);
     let [group, setGroup] = useState("");
 
+    const addButtonDisabled = name === "" || weight === 0 || group === "";
+
     return (
         <form
             className="bg-gray-300 text-gray-800 pt-2 pb-8 flex gap-6 px-12"
@@ -81,7 +83,8 @@ export function AddExercise({ onAdd }) {
                 {" "}
                 <input value={group} onChange={(e) => setGroup(e.target.value)} />
             </label>
-            <button type="submit"><b>Add</b></button>
+            <button type="submit" className={addButtonDisabled ? "text-gray-500" : ""}
+                disabled={addButtonDisabled}><b>Add</b></button>
         </form>
     );
 }

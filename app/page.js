@@ -35,7 +35,8 @@ export default function Home() {
                 )}
             </main>
             <button className="fixed right-12 bottom-8 text-6xl bg-green-600 
-        rounded-full flex justify-center w-16 h-16 hover:bg-green-700" onClick={handleAddWorkout}>
+                rounded-full flex justify-center w-16 h-16 hover:bg-green-700"
+                onClick={handleAddWorkout}>
                 +
             </button>
         </>
