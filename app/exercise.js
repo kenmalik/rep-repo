@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-export default function Exercise({ exercise, onDelete, isEditable, onWeightChange }) {
+export default function Exercise({ exercise, onDelete, isEditable, onNameChange, onWeightChange, onGroupChange }) {
     let [name, setName] = useState(exercise.name);
-    let [group, setGroup] = useState(exercise.group);
     let [isExpanded, setIsExpanded] = useState(false);
 
     return (
@@ -19,12 +18,13 @@ export default function Exercise({ exercise, onDelete, isEditable, onWeightChang
                             {" "}
                             {isEditable ?
                                 <input type="text"
-                                    value={name}
+                                    value={exercise.name}
                                     className="bg-gray-200 p-1 w-32"
                                     onChange={(e) => {
-                                        setName(e.target.value);
+                                        onNameChange(exercise.id, e.target.value);
+                                        e.stopPropagation();
                                     }} />
-                                : name
+                                : exercise.name
                             }
                         </label>
                         <label>
@@ -36,6 +36,7 @@ export default function Exercise({ exercise, onDelete, isEditable, onWeightChang
                                     className="bg-gray-200 p-1 w-16"
                                     onChange={(e) => {
                                         onWeightChange(exercise.id, Number(e.target.value));
+                                        e.stopPropagation();
                                     }} />
                                 : exercise.weight
                             }
@@ -45,12 +46,13 @@ export default function Exercise({ exercise, onDelete, isEditable, onWeightChang
                             {" "}
                             {isEditable ?
                                 <input type="text"
-                                    value={group}
+                                    value={exercise.group}
                                     className="bg-gray-200 p-1 w-32"
                                     onChange={(e) => {
-                                        setGroup(e.target.value);
+                                        onGroupChange(exercise.id, e.target.value);
+                                        e.stopPropagation();
                                     }} />
-                                : group
+                                : exercise.group
                             }
                         </label>
                     </div>

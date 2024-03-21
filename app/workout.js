@@ -43,12 +43,38 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
         }));
     }
 
+    function handleSetName(id, name) {
+        setExerciseList(exerciseList.map((exercise) => {
+            if (exercise.id === id) {
+                return {
+                    ...exercise,
+                    name: name,
+                };
+            } else {
+                return exercise;
+            }
+        }));
+    }
+
     function handleSetWeight(id, weight) {
         setExerciseList(exerciseList.map((exercise) => {
             if (exercise.id === id) {
                 return {
                     ...exercise,
                     weight: weight,
+                };
+            } else {
+                return exercise;
+            }
+        }));
+    }
+
+    function handleSetGroup(id, group) {
+        setExerciseList(exerciseList.map((exercise) => {
+            if (exercise.id === id) {
+                return {
+                    ...exercise,
+                    group: group,
                 };
             } else {
                 return exercise;
@@ -90,8 +116,13 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
                     exerciseList={exerciseList} />}
             {isEditing && <AddExercise onAdd={handleAddExercise} />}
             {exerciseList.map((exercise) =>
-                <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} onDelete={handleDeleteExercise}
-                    onWeightChange={handleSetWeight} />
+                <Exercise key={exercise.id}
+                    isEditable={isEditing}
+                    onDelete={handleDeleteExercise}
+                    exercise={exercise}
+                    onNameChange={handleSetName}
+                    onWeightChange={handleSetWeight}
+                    onGroupChange={handleSetGroup} />
             )}
         </div>
     );
