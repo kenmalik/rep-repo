@@ -22,6 +22,28 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
         ));
     }
 
+    function handleIncrementAll(amount) {
+        setExerciseList(exerciseList.map((exercise) => {
+            return {
+                ...exercise,
+                weight: exercise.weight + amount,
+            }
+        }));
+    }
+
+    function handleSetWeight(id, weight) {
+        setExerciseList(exerciseList.map((exercise) => {
+            if (exercise.id === id) {
+                return {
+                    ...exercise,
+                    weight: weight,
+                };
+            } else {
+                return exercise;
+            }
+        }));
+    }
+
     return (
         <div className="mb-20 rounded-xl overflow-hidden">
             <form
@@ -36,18 +58,23 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
                 }
                 <div className="flex gap-6">
                     {isEditing && <button type="button" onClick={() => onDelete(workoutId)}>Delete Workout</button>}
-                    <button type="submit" onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Finish Edits" : "Edit"}</button>
+                    <button type="submit" onClick={() => setIsEditing(!isEditing)}
+                        title={isEditing ? "Save changes to workout" : "Make changes to workout"}>
+                        {isEditing ? "Finish Edits" : "Edit"}
+                    </button>
                 </div>
             </form>
+            <Toolbar isEditing={isEditing} onIncrementAll={handleIncrementAll} />
             {isEditing && <AddExercise onAdd={handleAddExercise} />}
             {exerciseList.map((exercise) =>
-                <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} onDelete={handleDeleteExercise} />
+                <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} onDelete={handleDeleteExercise}
+                onWeightChange={handleSetWeight} />
             )}
         </div>
     );
 }
 
-export function AddExercise({ onAdd }) {
+function AddExercise({ onAdd }) {
     let [name, setName] = useState("");
     let [weight, setWeight] = useState(0);
     let [group, setGroup] = useState("");
@@ -86,5 +113,17 @@ export function AddExercise({ onAdd }) {
             <button type="submit" className={addButtonDisabled ? "text-gray-500" : ""}
                 disabled={addButtonDisabled}><b>Add</b></button>
         </form>
+    );
+}
+
+function Toolbar({ isEditing, onIncrementAll }) {
+    return (
+        <div className="bg-gray-300 text-gray-800 pb-6 flex gap-8 px-12 font-semibold">
+            {isEditing ? "Edit Actions:" : "Actions:"}
+            <ul className="flex gap-8 font-light">
+                <li><button title="Increment weight by group">Increment Group</button></li>
+                <li><button title="Increment weight for all exercises" onClick={() => onIncrementAll(5)}>Increment All</button></li>
+            </ul>
+        </div>
     );
 }

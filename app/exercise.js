@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-export default function Exercise({ exercise, onDelete, isEditable }) {
+export default function Exercise({ exercise, onDelete, isEditable, onWeightChange }) {
     let [name, setName] = useState(exercise.name);
-    let [weight, setWeight] = useState(exercise.weight);
     let [group, setGroup] = useState(exercise.group);
     let [isExpanded, setIsExpanded] = useState(false);
 
@@ -32,12 +31,12 @@ export default function Exercise({ exercise, onDelete, isEditable }) {
                         {" "}
                         {isEditable ?
                             <input type="number"
-                                value={weight}
+                                value={exercise.weight}
                                 className="bg-gray-200 p-1 w-16"
                                 onChange={(e) => {
-                                    setWeight(Number(e.target.value));
+                                    onWeightChange(exercise.id, Number(e.target.value));
                                 }} />
-                            : weight
+                            : exercise.weight
                         }
                     </label>
                     <label >
@@ -58,7 +57,7 @@ export default function Exercise({ exercise, onDelete, isEditable }) {
                 {isEditable && <button onClick={() => onDelete(exercise.id)}>Delete</button>}
             </div>
             <div className="ml-28 mt-6 text-gray-600">
-                {isExpanded && <Dropdown weight={weight} />}
+                {isExpanded && <Dropdown weight={exercise.weight} />}
             </div>
         </div>
     );
