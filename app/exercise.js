@@ -58,7 +58,12 @@ export default function Exercise({ exercise, onDelete, isEditable, onNameChange,
                     </div>
                 </form>
 
-                {isEditable && <button onClick={() => onDelete(exercise.id)}>Delete</button>}
+                {isEditable && <button
+                    onClick={() => onDelete(exercise.id)}
+                    title="Delete exercise"
+                    className="text-rose-500 hover:underline">
+                    Delete
+                </button>}
             </div>
             <div className="ml-28 mt-6 text-gray-600">
                 {isExpanded && <Dropdown weight={exercise.weight} />}

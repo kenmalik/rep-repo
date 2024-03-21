@@ -96,17 +96,18 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
                         className="font-bold text-3xl px-4 py-2" />
                     : <h1 className="font-bold text-3xl">{title}</h1>
                 }
-                <div className="flex gap-6">
+                <div className="flex gap-8">
                     {isEditing &&
                         <button type="button"
+                            title="Delete workout"
                             onClick={() => onDelete(workoutId)}
-                            className="hover:underline">
-                            Delete Workout
+                            className="text-rose-500 hover:underline">
+                            Delete
                         </button>}
                     <button onClick={() => setIsEditing(!isEditing)}
                         className="hover:underline"
                         title={isEditing ? "Save changes to workout" : "Make changes to workout"}>
-                        {isEditing ? "Finish Edits" : "Edit"}
+                        {isEditing ? "Finish" : "Edit"}
                     </button>
                 </div>
             </form>
