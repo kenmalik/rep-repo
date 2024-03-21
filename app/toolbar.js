@@ -13,7 +13,7 @@ export default function Toolbar({ onIncrementAll, onIncrementGroup, exerciseList
             <div className="bg-gray-300 text-gray-800 pb-6 flex gap-8 px-12 font-bold items-center">
                 Actions:
                 <ul className="flex flex-wrap gap-8 gap-y-2 font-light">
-                    <li><button title="Increment weight for all exercises"
+                    <li><button title={empty ? "Add an exercise to perform actions" : "Increment weight for all exercises"}
                         onClick={(e) => {
                             setSelection((selection === "increment all") ? "" : "increment all");
                             e.stopPropagation();
@@ -22,9 +22,9 @@ export default function Toolbar({ onIncrementAll, onIncrementGroup, exerciseList
                         className={empty
                             ? disabledButtonStyles
                             : (activeButtonStyles
-                                + (selection === "increment all" ? "bg-neutral-800 text-gray-100 hover:bg-gray-900" : ""))}
+                                + (selection === "increment all" ? "bg-neutral-800 text-gray-100 hover:bg-gray-900" : undefined))}
                     >Increment All</button></li>
-                    <li><button title="Increment weight by group"
+                    <li><button title={empty ? "Add an exercise to perform actions" : "Increment weight by group"}
                         onClick={(e) => {
                             setSelection((selection === "increment group") ? "" : "increment group");
                             e.stopPropagation();
@@ -33,7 +33,7 @@ export default function Toolbar({ onIncrementAll, onIncrementGroup, exerciseList
                         className={empty
                             ? disabledButtonStyles
                             : (activeButtonStyles
-                                + (selection === "increment group" ? "bg-neutral-800 text-gray-100 hover:bg-gray-900" : ""))
+                                + (selection === "increment group" ? "bg-neutral-800 text-gray-100 hover:bg-gray-900" : undefined))
                         }
                     >
                         Increment Group

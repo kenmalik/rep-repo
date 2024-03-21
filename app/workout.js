@@ -166,8 +166,12 @@ function AddExercise({ onAdd }) {
                     {" "}
                     <input value={group} onChange={(e) => setGroup(e.target.value)} />
                 </label>
-                <button type="submit" className={addButtonDisabled ? "text-gray-500" : ""}
-                    disabled={addButtonDisabled}><b>Add</b></button>
+                <button type="submit"
+                    disabled={addButtonDisabled}
+                    title={addButtonDisabled ? "Please fill in exercise information" : "Add exercise"}
+                    className={addButtonDisabled ? "text-gray-500" : ""}>
+                    <b>Add</b>
+                </button>
             </div>
         </form>
     );
