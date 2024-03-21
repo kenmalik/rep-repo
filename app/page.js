@@ -2,7 +2,6 @@
 
 import Header from "./header.js";
 import Workout from "./workout.js";
-import { data, mockWorkouts } from "./mock-data.js";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid"
 
@@ -29,7 +28,7 @@ export default function Home() {
     return (
         <>
             <Header />
-            <main className="px-64 py-20">
+            <main className="px-4 lg:px-64 md:px-32 sm:px-10 py-20">
                 {workouts.map((workout) =>
                     <Workout workoutId={workout.id} name={workout.name} key={workout.id} exercises={workout.exercises} onDelete={handleDeleteWorkout} />
                 )}
@@ -41,7 +40,8 @@ export default function Home() {
 
 export function AddWorkoutButton({ empty, onClick }) {
     return (
-        <div className="flex items-center gap-4 fixed right-12 bottom-8">
+        <div className="flex items-center gap-4 fixed
+                        right-2 bottom-4 sm:right-8 sm:bottom-8 md:right-12 md:bottom-8">
             {empty && <p className="italic animate-pulse">Click here to add a workout -&gt;</p>}
             <button className="text-6xl bg-green-600 
                 rounded-full flex justify-center w-16 h-16 hover:bg-green-700"

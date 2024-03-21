@@ -58,14 +58,16 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
 
     return (
         <div className="mb-20 rounded-xl overflow-hidden">
-            <form
-                className="bg-gray-300 text-gray-800 py-8 px-12 flex justify-between items-center"
+            <form className="bg-gray-300 text-gray-800 py-8 px-12 
+                             flex flex-wrap gap-4 justify-between items-center"
                 onSubmit={(e) => {
                     e.preventDefault();
                 }}
             >
                 {isEditing ?
-                    <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} className="font-bold text-3xl px-4 py-2" />
+                    <input type="text" value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        className="font-bold text-3xl px-4 py-2" />
                     : <h1 className="font-bold text-3xl">{title}</h1>
                 }
                 <div className="flex gap-6">
@@ -82,9 +84,10 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
                     </button>
                 </div>
             </form>
-            {!isEditing && <Toolbar onIncrementAll={handleIncrementAll}
-                onIncrementGroup={handleIncrementGroup}
-                exerciseList={exerciseList} />}
+            {!isEditing &&
+                <Toolbar onIncrementAll={handleIncrementAll}
+                    onIncrementGroup={handleIncrementGroup}
+                    exerciseList={exerciseList} />}
             {isEditing && <AddExercise onAdd={handleAddExercise} />}
             {exerciseList.map((exercise) =>
                 <Exercise exercise={exercise} key={exercise.id} isEditable={isEditing} onDelete={handleDeleteExercise}
@@ -115,23 +118,25 @@ function AddExercise({ onAdd }) {
             }}
         >
             <label className="font-bold">Add Exercise:</label>
-            <label>
-                Name:
-                {" "}
-                <input value={name} onChange={(e) => setName(e.target.value)} />
-            </label>
-            <label>
-                Weight:
-                {" "}
-                <input type="number" value={weight} onChange={(e) => setWeight(Number(e.target.value))} />
-            </label>
-            <label>
-                Group:
-                {" "}
-                <input value={group} onChange={(e) => setGroup(e.target.value)} />
-            </label>
-            <button type="submit" className={addButtonDisabled ? "text-gray-500" : ""}
-                disabled={addButtonDisabled}><b>Add</b></button>
+            <div className="flex flex-wrap gap-6">
+                <label>
+                    Name:
+                    {" "}
+                    <input value={name} onChange={(e) => setName(e.target.value)} />
+                </label>
+                <label>
+                    Weight:
+                    {" "}
+                    <input type="number" value={weight} onChange={(e) => setWeight(Number(e.target.value))} />
+                </label>
+                <label>
+                    Group:
+                    {" "}
+                    <input value={group} onChange={(e) => setGroup(e.target.value)} />
+                </label>
+                <button type="submit" className={addButtonDisabled ? "text-gray-500" : ""}
+                    disabled={addButtonDisabled}><b>Add</b></button>
+            </div>
         </form>
     );
 }

@@ -12,7 +12,7 @@ export default function Toolbar({ onIncrementAll, onIncrementGroup, exerciseList
         <>
             <div className="bg-gray-300 text-gray-800 pb-6 flex gap-8 px-12 font-bold items-center">
                 Actions:
-                <ul className="flex gap-8 font-light">
+                <ul className="flex flex-wrap gap-8 gap-y-2 font-light">
                     <li><button title="Increment weight for all exercises"
                         onClick={() => onIncrementAll(5)}
                         disabled={empty}
@@ -49,7 +49,7 @@ function GroupSelector({ groups, onIncrement }) {
     const buttonsDisabled = incrementAmount <= 0;
 
     return (
-        <div className="bg-gray-300 text-gray-700 pb-6 flex gap-12 px-12 font-semibold items-center">
+        <div className="bg-gray-300 text-gray-700 pb-6 flex flex-wrap gap-12 gap-y-4 px-12 font-semibold items-center">
             <form onSubmit={(e) => e.preventDefault()}>
                 <label className={sectionStyle}>Amount:
                     <input type="number" min={0} value={incrementAmount} className="w-16 p-1 font-light"
@@ -59,7 +59,7 @@ function GroupSelector({ groups, onIncrement }) {
             </form>
             <form onSubmit={(e) => e.preventDefault()} className={sectionStyle}>
                 <label>Select Group to Increment:</label>
-                <ul className="flex gap-4 font-light">
+                <ul className="flex flex-wrap gap-4 gap-y-2 font-light">
                     {groups.map((group) =>
                         <li key={uuidv4()}>
                             <button
