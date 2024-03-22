@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 body {
+  height: 100vh;
+}
+
+main {
   @apply text-white bg-gray-800
 }
 

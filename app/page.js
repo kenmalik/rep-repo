@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="px-4 lg:px-64 md:px-32 sm:px-10 py-20">
+      <main className="h-full px-4 lg:px-48 md:px-32 sm:px-10 py-10 md:py-20">
         {workouts.map((workout) => (
           <Workout
             workoutId={workout.id}
@@ -48,7 +48,7 @@ export default function Home() {
 export function AddWorkoutButton({ empty, onClick }) {
   return (
     <div
-      className="flex items-center gap-4 fixed
+      className="flex items-center gap-4 fixed text-green-100
                         right-2 bottom-4 sm:right-8 sm:bottom-8 md:right-12 md:bottom-8"
     >
       {empty && (

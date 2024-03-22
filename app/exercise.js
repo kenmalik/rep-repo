@@ -86,7 +86,7 @@ export default function Exercise({
           </button>
         )}
       </div>
-      <div className="ml-28 mt-6 text-gray-600">
+      <div className="ml-20 md:ml-28 mt-6 text-gray-600">
         {isExpanded && <Dropdown weight={exercise.weight} />}
       </div>
     </div>

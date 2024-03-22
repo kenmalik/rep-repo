@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 import Exercise from "./exercise.js";
 import Toolbar from "./toolbar.js";
-import { v4 as uuidv4 } from "uuid";
 
 export default function Workout({ name, exercises, onDelete, workoutId }) {
   let [exerciseList, setExerciseList] = useState(exercises);
@@ -88,20 +89,20 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
   }
 
   return (
-    <div className="mb-20 rounded-xl overflow-hidden">
+    <div className="mb-12 med:mb-20 rounded-xl overflow-hidden">
       <form
-        className="bg-gray-300 text-gray-800 py-8 px-12 
-                             flex flex-wrap gap-4 justify-between items-center"
+        className="bg-gray-300 text-gray-800 py-8 px-12 flex flex-wrap gap-4 justify-between items-center "
         onSubmit={(e) => {
           e.preventDefault();
         }}
       >
+        {" "}
         {isEditing ? (
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="font-bold text-3xl px-4 py-2"
+            className="font-bold text-3xl px-4 py-2 min-w-0"
           />
         ) : (
           <h1 className="font-bold text-3xl">{title}</h1>
