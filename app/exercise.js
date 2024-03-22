@@ -15,79 +15,84 @@ export default function Exercise({
   let [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-white text-gray-800 py-7">
-      <div className="flex justify-between flex-wrap px-12">
-        <form onSubmit={(e) => e.preventDefault()} className="flex">
-          <button
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="w-4 mr-8"
+    <div className="bg-white text-gray-800 py-8 px-12">
+      <div className="flex">
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="h-6 w-4 mr-8"
+        >
+          {isExpanded ? "^" : ">"}
+        </button>
+        <div>
+          <form
+            onSubmit={(e) => e.preventDefault()}
+            className="flex flex-wrap justify-between gap-4 flex-grow"
           >
-            {isExpanded ? "^" : ">"}
-          </button>
-          <div className="flex flex-wrap gap-8 gap-y-6 items-center">
-            <label>
-              <b>Exercise:</b>{" "}
-              {isEditable ? (
-                <input
-                  type="text"
-                  value={exercise.name}
-                  className="bg-gray-200 p-1 w-32"
-                  onChange={(e) => {
-                    onNameChange(exercise.id, e.target.value);
-                    e.stopPropagation();
-                  }}
-                />
-              ) : (
-                exercise.name
-              )}
-            </label>
-            <label>
-              <b>Weight:</b>{" "}
-              {isEditable ? (
-                <input
-                  type="number"
-                  value={exercise.weight}
-                  className="bg-gray-200 p-1 w-16"
-                  onChange={(e) => {
-                    onWeightChange(exercise.id, Number(e.target.value));
-                    e.stopPropagation();
-                  }}
-                />
-              ) : (
-                exercise.weight
-              )}
-            </label>
-            <label>
-              <b>Group:</b>{" "}
-              {isEditable ? (
-                <input
-                  type="text"
-                  value={exercise.group}
-                  className="bg-gray-200 p-1 w-32"
-                  onChange={(e) => {
-                    onGroupChange(exercise.id, e.target.value);
-                    e.stopPropagation();
-                  }}
-                />
-              ) : (
-                exercise.group
-              )}
-            </label>
-          </div>
-        </form>
-
-        {isEditable && (
-          <button
-            onClick={() => onDelete(exercise.id)}
-            title="Delete exercise"
-            className="text-rose-500 hover:underline"
-          >
-            Delete
-          </button>
-        )}
-      </div>
-      <div className="ml-20 md:ml-28 mt-6 pr-16 text-gray-600">
-        {isExpanded && <Dropdown weight={exercise.weight} />}
+            <div className="flex flex-wrap gap-8 gap-y-6 items-center">
+              <label>
+                <b>Exercise:</b>{" "}
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={exercise.name}
+                    maxLength={32}
+                    className="bg-gray-200 p-1 w-32"
+                    onChange={(e) => {
+                      onNameChange(exercise.id, e.target.value);
+                      e.stopPropagation();
+                    }}
+                  />
+                ) : (
+                  exercise.name
+                )}
+              </label>
+              <label>
+                <b>Weight:</b>{" "}
+                {isEditable ? (
+                  <input
+                    type="number"
+                    value={exercise.weight}
+                    maxLength={4}
+                    className="bg-gray-200 p-1 w-16"
+                    onChange={(e) => {
+                      onWeightChange(exercise.id, Number(e.target.value));
+                      e.stopPropagation();
+                    }}
+                  />
+                ) : (
+                  exercise.weight
+                )}
+              </label>
+              <label>
+                <b>Group:</b>{" "}
+                {isEditable ? (
+                  <input
+                    type="text"
+                    value={exercise.group}
+                    maxLength={32}
+                    className="bg-gray-200 p-1 w-32"
+                    onChange={(e) => {
+                      onGroupChange(exercise.id, e.target.value);
+                      e.stopPropagation();
+                    }}
+                  />
+                ) : (
+                  exercise.group
+                )}
+              </label>
+            </div>
+            {isEditable && (
+              <button
+                onClick={() => onDelete(exercise.id)}
+                title="Delete exercise"
+                className="text-rose-500 hover:underline py-2"
+              >
+                Delete
+              </button>
+            )}
+          </form>
+          {isExpanded && <Dropdown weight={exercise.weight} />}
+        </div>
       </div>
     </div>
   );
@@ -96,9 +101,9 @@ export default function Exercise({
 function Dropdown({ weight }) {
   const percentages = [60, 65, 75, 80, 85, 90, 95];
   return (
-    <div className="flex flex-col gap-4">
-      <h2>Percentages</h2>
-      <div className="flex ml-2 gap-10 flex-wrap">
+    <div className="sm:ml-4 md:ml-8 mt-8 text-gray-600">
+      <h2 className="mb-4">Percentages</h2>
+      <div className="flex gap-10 flex-wrap">
         {percentages.map((percentage) => (
           <p key={uuidv4()}>
             <b>{percentage}:</b>{" "}
