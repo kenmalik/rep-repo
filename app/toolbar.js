@@ -9,9 +9,6 @@ export default function Toolbar({
   let [selection, setSelection] = useState("");
 
   const empty = exerciseList.length === 0;
-  const activeButtonStyles =
-    "py-1.5 px-4 rounded-xl hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
-  const disabledButtonStyles = "py-1.5 px-4 rounded-xl text-gray-500 ";
 
   return (
     <>
@@ -19,56 +16,26 @@ export default function Toolbar({
         Actions:
         <ul className="flex flex-wrap gap-8 gap-y-2 font-light">
           <li>
-            <button
-              title={
-                empty
-                  ? "Add an exercise to perform actions"
-                  : "Increment weight for all exercises"
-              }
-              onClick={(e) => {
-                setSelection(
-                  selection === "increment all" ? "" : "increment all",
-                );
-                e.stopPropagation();
-              }}
+            <MenuButton
+              name="increment all"
+              activeTitle="Increment weight for all exercises"
+              setSelection={setSelection}
               disabled={empty}
-              className={
-                empty
-                  ? disabledButtonStyles
-                  : activeButtonStyles +
-                    (selection === "increment all"
-                      ? "bg-neutral-800 text-gray-100 hover:bg-gray-900"
-                      : undefined)
-              }
+              currentSelection={selection}
             >
               Increment All
-            </button>
+            </MenuButton>
           </li>
           <li>
-            <button
-              title={
-                empty
-                  ? "Add an exercise to perform actions"
-                  : "Increment weight by group"
-              }
-              onClick={(e) => {
-                setSelection(
-                  selection === "increment group" ? "" : "increment group",
-                );
-                e.stopPropagation();
-              }}
+            <MenuButton
+              name="increment group"
+              activeTitle="Increment weight by group"
+              setSelection={setSelection}
               disabled={empty}
-              className={
-                empty
-                  ? disabledButtonStyles
-                  : activeButtonStyles +
-                    (selection === "increment group"
-                      ? "bg-neutral-800 text-gray-100 hover:bg-gray-900"
-                      : undefined)
-              }
+              currentSelection={selection}
             >
               Increment Group
-            </button>
+            </MenuButton>
           </li>
         </ul>
       </div>
@@ -82,6 +49,42 @@ export default function Toolbar({
         <IncrementAll onIncrement={onIncrementAll} />
       )}
     </>
+  );
+}
+
+function MenuButton({
+  name,
+  activeTitle,
+  setSelection,
+  currentSelection,
+  disabled,
+  children,
+}) {
+  const toggled = currentSelection === name;
+
+  const activeButtonStyles =
+    "py-1.5 px-4 rounded-xl hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
+  const disabledButtonStyles = "py-1.5 px-4 rounded-xl text-gray-500 ";
+
+  return (
+    <button
+      title={disabled ? "Add an exercise to perform actions" : activeTitle}
+      onClick={(e) => {
+        setSelection(toggled ? undefined : name);
+        e.stopPropagation();
+      }}
+      disabled={disabled}
+      className={
+        disabled
+          ? disabledButtonStyles
+          : activeButtonStyles +
+            (toggled
+              ? "bg-neutral-800 text-gray-100 hover:bg-gray-900"
+              : undefined)
+      }
+    >
+      {children}
+    </button>
   );
 }
 
@@ -110,6 +113,11 @@ function IncrementAll({ onIncrement }) {
       </form>
       <form onSubmit={(e) => e.preventDefault()}>
         <button
+          title={
+            buttonsDisabled
+              ? "Please select amount to increment by"
+              : "Increment all exercises by " + Number(incrementAmount)
+          }
           className={
             buttonsDisabled ? disabledButtonStyles : activeButtonStyles
           }
@@ -154,6 +162,14 @@ function GroupSelector({ groups, onIncrement }) {
           {groups.map((group) => (
             <li key={uuidv4()}>
               <button
+                title={
+                  buttonsDisabled
+                    ? "Please select amount to increment by"
+                    : 'Increment group "' +
+                      group +
+                      '" by ' +
+                      Number(incrementAmount)
+                }
                 onClick={(e) => {
                   onIncrement(Number(incrementAmount), group);
                   e.stopPropagation();

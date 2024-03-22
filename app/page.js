@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="h-full px-4 lg:px-48 md:px-32 sm:px-10 py-10 md:py-20">
+      <main className="px-4 lg:px-56 md:px-32 sm:px-10 py-10 md:py-20">
         {workouts.map((workout) => (
           <Workout
             workoutId={workout.id}

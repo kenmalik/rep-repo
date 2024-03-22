@@ -161,7 +161,7 @@ function AddExercise({ onAdd }) {
 
   return (
     <form
-      className="bg-gray-300 text-gray-800 pt-2 pb-8 flex flex-wrap gap-6 px-12"
+      className="bg-gray-300 text-gray-800 pt-2 pb-8 flex flex-wrap gap-6 px-12 items-end"
       onSubmit={(e) => {
         e.preventDefault();
         onAdd({
@@ -177,22 +177,38 @@ function AddExercise({ onAdd }) {
       }}
     >
       <label className="font-bold">Add Exercise:</label>
-      <div className="flex flex-wrap gap-6">
-        <label>
-          Name: <input value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <label>
-          Weight:{" "}
+      <div className="flex flex-wrap gap-6 items-end">
+        <div>
+          <label htmlFor="new-workout-name" className="block w-8">
+            Name:
+          </label>
           <input
+            id="new-workout-name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor="new-workout-weight" className="block w-8">
+            Weight:{" "}
+          </label>
+          <input
+            id="new-workout-weight"
             type="number"
             value={weight}
             onChange={(e) => setWeight(Number(e.target.value))}
           />
-        </label>
-        <label>
-          Group:{" "}
-          <input value={group} onChange={(e) => setGroup(e.target.value)} />
-        </label>
+        </div>
+        <div>
+          <label for="new-workout-group" className="block w-8">
+            Group:{" "}
+          </label>
+          <input
+            value={group}
+            onChange={(e) => setGroup(e.target.value)}
+            id="new-workout-group"
+          />
+        </div>
         <button
           type="submit"
           disabled={addButtonDisabled}
@@ -201,7 +217,9 @@ function AddExercise({ onAdd }) {
               ? "Please fill in exercise information"
               : "Add exercise"
           }
-          className={addButtonDisabled ? "text-gray-500" : ""}
+          className={
+            "px-4 " + (addButtonDisabled ? "text-gray-500" : "hover:underline")
+          }
         >
           <b>Add</b>
         </button>
