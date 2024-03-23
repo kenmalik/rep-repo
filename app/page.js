@@ -51,7 +51,7 @@ export function AddWorkoutButton({ empty, onClick }) {
   return (
     <div
       className="flex items-center gap-4 fixed text-green-100
-                        right-2 bottom-4 sm:right-8 sm:bottom-8 md:right-12 md:bottom-8"
+                        right-4 bottom-4 sm:right-8 sm:bottom-8 md:right-12 md:bottom-8"
     >
       {empty && (
         <p className="italic animate-pulse">
@@ -59,6 +59,7 @@ export function AddWorkoutButton({ empty, onClick }) {
         </p>
       )}
       <button
+        title="Add a workout"
         className="text-6xl bg-green-600 sm:transition sm:ease-in-out 
                        sm:duration-75 sm:hover:scale-105 rounded-full flex 
                        justify-center w-16 h-16 hover:bg-green-700"

@@ -12,8 +12,8 @@ export default function Toolbar({
 
   return (
     <>
-      <div className="bg-gray-300 text-gray-800 pb-6 sm:flex gap-8 px-12 font-bold items-center">
-        <p className="mb-2 sm:mb-0">Actions:</p>
+      <div className="bg-gray-300 text-gray-700 pb-6 sm:flex gap-8 px-12 items-center">
+        <p className="mb-2 sm:mb-0 font-semibold">Actions:</p>
         <ul className="flex flex-wrap gap-8 gap-y-4 font-light m-0 p-0">
           <li>
             <MenuButton
@@ -62,9 +62,11 @@ function MenuButton({
 }) {
   const toggled = currentSelection === name;
 
+  const buttonStyles = "py-1.5 px-2 text-sm sm:text-md sm:px-4 rounded-xl ";
   const activeButtonStyles =
-    "py-1.5 px-2 sm:px-4 rounded-xl hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
-  const disabledButtonStyles = "py-1.5 px-2 sm:px-4 rounded-xl text-gray-500 ";
+    buttonStyles +
+    "hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
+  const disabledButtonStyles = buttonStyles + "text-gray-500 ";
 
   return (
     <button
@@ -137,9 +139,11 @@ function GroupSelector({ groups, onIncrement }) {
   let [incrementAmount, setIncrementAmount] = useState(0);
 
   const sectionStyle = "flex items-center gap-4";
+  const buttonStyles = "text-sm sm:text-base py-1.5 px-3 rounded-xl ";
   const activeButtonStyles =
-    "py-1.5 px-3 rounded-xl hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
-  const disabledButtonStyles = "py-1.5 px-3 rounded-xl text-gray-500";
+    buttonStyles +
+    "hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
+  const disabledButtonStyles = buttonStyles + "text-gray-500";
   const buttonsDisabled = incrementAmount <= 0;
 
   return (
