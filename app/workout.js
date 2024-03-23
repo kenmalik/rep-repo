@@ -157,7 +157,8 @@ function AddExercise({ onAdd }) {
   let [weight, setWeight] = useState(0);
   let [group, setGroup] = useState("");
 
-  const addButtonDisabled = name === "" || weight < 0 || group === "";
+  const addButtonDisabled =
+    name === "" || weight === "" || weight < 0 || group === "";
 
   return (
     <form
@@ -166,7 +167,7 @@ function AddExercise({ onAdd }) {
         e.preventDefault();
         onAdd({
           name: name,
-          weight: weight,
+          weight: Number(weight),
           group: group,
           isEditable: false,
           id: uuidv4(),
@@ -196,11 +197,11 @@ function AddExercise({ onAdd }) {
             id="new-workout-weight"
             type="number"
             value={weight}
-            onChange={(e) => setWeight(Number(e.target.value))}
+            onChange={(e) => setWeight(e.target.value)}
           />
         </div>
         <div>
-          <label for="new-workout-group" className="block w-8">
+          <label htmlFor="new-workout-group" className="block w-8">
             Group:{" "}
           </label>
           <input

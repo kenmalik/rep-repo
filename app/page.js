@@ -2,6 +2,7 @@
 
 import Header from "./header.js";
 import Workout from "./workout.js";
+import OrmCalculator from "./orm-calculator.js";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
@@ -26,7 +27,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="px-4 lg:px-56 md:px-32 sm:px-10 py-10 md:py-20">
+      <main className="px-6 lg:px-56 md:px-32 sm:px-10 py-10 md:py-20">
         {workouts.map((workout) => (
           <Workout
             workoutId={workout.id}
@@ -41,6 +42,7 @@ export default function Home() {
         empty={workouts.length === 0}
         onClick={handleAddWorkout}
       />
+      <OrmCalculator />
     </>
   );
 }
@@ -57,8 +59,9 @@ export function AddWorkoutButton({ empty, onClick }) {
         </p>
       )}
       <button
-        className="text-6xl bg-green-600 
-                rounded-full flex justify-center w-16 h-16 hover:bg-green-700"
+        className="text-6xl bg-green-600 sm:transition sm:ease-in-out 
+                       sm:duration-75 sm:hover:scale-105 rounded-full flex 
+                       justify-center w-16 h-16 hover:bg-green-700"
         onClick={onClick}
       >
         +
