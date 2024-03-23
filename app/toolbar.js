@@ -12,9 +12,9 @@ export default function Toolbar({
 
   return (
     <>
-      <div className="bg-gray-300 text-gray-800 pb-6 flex gap-8 px-12 font-bold items-center">
-        Actions:
-        <ul className="flex flex-wrap gap-8 gap-y-2 font-light">
+      <div className="bg-gray-300 text-gray-800 pb-6 sm:flex gap-8 px-12 font-bold items-center">
+        <p className="mb-2 sm:mb-0">Actions:</p>
+        <ul className="flex flex-wrap gap-8 gap-y-4 font-light m-0 p-0">
           <li>
             <MenuButton
               name="increment all"
@@ -63,8 +63,8 @@ function MenuButton({
   const toggled = currentSelection === name;
 
   const activeButtonStyles =
-    "py-1.5 px-4 rounded-xl hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
-  const disabledButtonStyles = "py-1.5 px-4 rounded-xl text-gray-500 ";
+    "py-1.5 px-2 sm:px-4 rounded-xl hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
+  const disabledButtonStyles = "py-1.5 px-2 sm:px-4 rounded-xl text-gray-500 ";
 
   return (
     <button

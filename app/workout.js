@@ -91,7 +91,7 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
   return (
     <div className="mb-12 med:mb-20 rounded-xl overflow-hidden">
       <form
-        className="bg-gray-300 text-gray-800 py-8 px-12 flex flex-wrap gap-4 justify-between items-center "
+        className="bg-gray-300 text-gray-800 pt-8 pb-6 px-12 flex flex-wrap gap-4 justify-between items-center "
         onSubmit={(e) => {
           e.preventDefault();
         }}
@@ -102,10 +102,10 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="font-bold text-3xl px-4 py-2 min-w-0"
+            className="font-bold text-2xl sm:text-3xl px-4 py-2 min-w-0"
           />
         ) : (
-          <h1 className="font-bold text-3xl">{title}</h1>
+          <h1 className="font-bold text-2xl sm:text-3xl">{title}</h1>
         )}
         <div className="flex gap-8">
           {isEditing && (

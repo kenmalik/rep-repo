@@ -11,3 +11,9 @@ body {
     text-wrap: balance;
   }
 }
+
+@media (max-width: 623px) {
+    html {
+        font-size: 15px;
+    }
+}
