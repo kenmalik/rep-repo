@@ -11,7 +11,6 @@ export default function Exercise({
   onWeightChange,
   onGroupChange,
 }) {
-  let [name, setName] = useState(exercise.name);
   let [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -19,7 +18,7 @@ export default function Exercise({
       <div className="flex">
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="h-6 w-4 mr-8"
+          className="h-6 w-8 mr-6"
         >
           {isExpanded ? "^" : ">"}
         </button>
