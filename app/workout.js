@@ -64,7 +64,7 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
         if (exercise.id === id) {
           return {
             ...exercise,
-            weight: weight,
+            weight: Number(weight),
           };
         } else {
           return exercise;

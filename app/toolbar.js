@@ -62,7 +62,7 @@ function MenuButton({
 }) {
   const toggled = currentSelection === name;
 
-  const buttonStyles = "py-1.5 px-2 text-sm sm:text-md sm:px-4 rounded-xl ";
+  const buttonStyles = "py-1.5 px-2 text-sm sm:text-base sm:px-4 rounded-xl ";
   const activeButtonStyles =
     buttonStyles +
     "hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
