@@ -64,7 +64,7 @@ function Body() {
         <div className="text-right">
           {/* Info button */}
           <button
-            className="w-6 h-6 text-gray-600 transition sm:hover:text-gray-800"
+            className="w-6 h-6 text-gray-600 sm:hover:text-gray-950"
             onClick={() => setIsInfoOpen(true)}
           >
             <svg
@@ -118,9 +118,10 @@ function Body() {
               </div>
               {/* Copy button */}
               <button
-                className="text-gray-600 transition sm:hover:text-gray-800"
+                className="text-gray-600 sm:hover:text-gray-950"
                 onClick={() => {
                   navigator.clipboard.writeText(getOrm());
+                  alert("One rep max copied to clipboard!");
                 }}
               >
                 <svg
