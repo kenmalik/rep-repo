@@ -99,6 +99,7 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
         {" "}
         {isEditing ? (
           <input
+            name="workout-title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
@@ -177,7 +178,7 @@ function AddExercise({ onAdd }) {
         setGroup("");
       }}
     >
-      <label className="font-bold">Add Exercise:</label>
+      <h2 className="font-bold">Add Exercise:</h2>
       <div className="flex flex-wrap gap-6 items-end">
         <div>
           <label htmlFor="new-workout-name" className="block w-8">

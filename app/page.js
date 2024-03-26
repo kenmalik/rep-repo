@@ -1,72 +1,48 @@
-"use client";
+import Link from "next/link";
 
-import Header from "./header.js";
-import Workout from "./workout.js";
-import OrmCalculator from "./orm-calculator.js";
-import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-
-export default function Home() {
-  let [workouts, setWorkouts] = useState([]);
-
-  function handleAddWorkout() {
-    setWorkouts([
-      ...workouts,
-      {
-        id: uuidv4(),
-        name: "New workout",
-        exercises: [],
-      },
-    ]);
-  }
-
-  function handleDeleteWorkout(id) {
-    setWorkouts(workouts.filter((workout) => workout.id !== id));
-  }
-
+export default function Splash() {
   return (
-    <>
-      <Header />
-      <main className="px-6 lg:px-56 md:px-32 sm:px-10 py-10 md:py-20">
-        {workouts.map((workout) => (
-          <Workout
-            workoutId={workout.id}
-            name={workout.name}
-            key={workout.id}
-            exercises={workout.exercises}
-            onDelete={handleDeleteWorkout}
-          />
-        ))}
-      </main>
-      <AddWorkoutButton
-        empty={workouts.length === 0}
-        onClick={handleAddWorkout}
-      />
-      <OrmCalculator />
-    </>
+    <main className="bg-gray-200 text-gray-800 flex justify-center md:justify-normal h-full">
+      <div className="items-stretch flex flex-col mt-16 md:mt-0 md:flex-row md:ml-24 lg:ml-48 md:self-center">
+        <div className="text-center md:text-right md:my-auto">
+          <div className="font-bold italic text-4xl">REP REPO</div>
+        </div>
+        <div className="border-r-gray-500 border-b-2 md:border-r-2 mx-12"></div>
+        <Buttons />
+      </div>
+    </main>
   );
 }
 
-export function AddWorkoutButton({ empty, onClick }) {
+function Buttons() {
+  const inputStyles = "bg-gray-100 block";
+  const buttonStyles =
+    "px-6 py-1 text-white bg-green-600 hover:bg-green-500 mr-4 rounded-lg";
+
   return (
-    <div
-      className="flex items-center gap-4 fixed text-green-100
-                        right-4 bottom-4 sm:right-8 sm:bottom-8 md:right-12 md:bottom-8"
-    >
-      {empty && (
-        <p className="italic animate-pulse">
-          Click here to add a workout -&gt;
-        </p>
-      )}
-      <button
-        title="Add a workout"
-        className="text-6xl bg-green-600 sm:transition sm:ease-in-out 
-                       sm:duration-75 sm:hover:scale-105 rounded-full flex 
-                       justify-center w-16 h-16 hover:bg-green-700"
-        onClick={onClick}
-      >
-        +
-      </button>
+    <div className="py-8">
+      <form className="mb-4">
+        <label className="block mb-4">
+          Username
+          <input
+            id="username"
+            type="text"
+            className={inputStyles}
+            autoComplete="on"
+          />
+        </label>
+        <label className="block mb-8">
+          Password
+          <input id="password" type="password" className={inputStyles} />
+        </label>
+        <div className="mb-12">
+          <button className={buttonStyles}>Log in</button>
+          <button className={buttonStyles}>Sign up</button>
+        </div>
+      </form>
+      <Link href="your-repo" className="hover:underline">
+        Continue as guest
+      </Link>
     </div>
   );
 }

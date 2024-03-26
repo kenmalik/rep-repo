@@ -64,7 +64,7 @@ function Body() {
         <div className="text-right">
           {/* Info button */}
           <button
-            className="w-6 h-6 text-gray-600 transition sm:hover:text-gray-800"
+            className="w-6 h-6 text-gray-600 sm:hover:text-gray-950"
             onClick={() => setIsInfoOpen(true)}
           >
             <svg
@@ -91,6 +91,7 @@ function Body() {
             <label className={labelStyles}>
               Weight:
               <input
+                name="weight"
                 type="number"
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
@@ -100,6 +101,7 @@ function Body() {
             <label className={labelStyles}>
               Reps:
               <input
+                name="repetitions"
                 type="number"
                 value={reps}
                 onChange={(e) => setReps(e.target.value)}
@@ -110,6 +112,7 @@ function Body() {
               <div className="flex-grow">
                 One Rep Max:
                 <input
+                  name="one-rep-max"
                   type="number"
                   className={inputStyles}
                   value={getOrm()}
@@ -118,9 +121,10 @@ function Body() {
               </div>
               {/* Copy button */}
               <button
-                className="text-gray-600 transition sm:hover:text-gray-800"
+                className="text-gray-600 sm:hover:text-gray-950"
                 onClick={() => {
                   navigator.clipboard.writeText(getOrm());
+                  alert("One rep max copied to clipboard!");
                 }}
               >
                 <svg

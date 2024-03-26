@@ -28,10 +28,11 @@ export default function Exercise({
             className="flex flex-wrap justify-between gap-4 flex-grow"
           >
             <div className="flex flex-wrap gap-8 gap-y-6 items-center">
-              <label>
+              <div>
                 <b>Exercise:</b>{" "}
                 {isEditable ? (
                   <input
+                    name="exercise-name"
                     type="text"
                     value={exercise.name}
                     maxLength={32}
@@ -44,11 +45,12 @@ export default function Exercise({
                 ) : (
                   exercise.name
                 )}
-              </label>
-              <label>
+              </div>
+              <div>
                 <b>Weight:</b>{" "}
                 {isEditable ? (
                   <input
+                    name="exercise-weight"
                     type="number"
                     value={exercise.weight}
                     maxLength={4}
@@ -61,11 +63,12 @@ export default function Exercise({
                 ) : (
                   exercise.weight
                 )}
-              </label>
-              <label>
+              </div>
+              <div>
                 <b>Group:</b>{" "}
                 {isEditable ? (
                   <input
+                    name="exercise-group"
                     type="text"
                     value={exercise.group}
                     maxLength={32}
@@ -78,7 +81,7 @@ export default function Exercise({
                 ) : (
                   exercise.group
                 )}
-              </label>
+              </div>
             </div>
             {isEditable && (
               <button
