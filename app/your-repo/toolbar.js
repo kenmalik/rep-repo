@@ -105,6 +105,7 @@ function IncrementAll({ onIncrement }) {
         <label className={sectionStyle}>
           Amount:
           <input
+            name="increment-amount"
             type="number"
             min={0}
             value={incrementAmount}
@@ -152,6 +153,7 @@ function GroupSelector({ groups, onIncrement }) {
         <label className={sectionStyle}>
           Amount:
           <input
+            name="increment-amount"
             type="number"
             min={0}
             value={incrementAmount}
@@ -161,7 +163,7 @@ function GroupSelector({ groups, onIncrement }) {
         </label>
       </form>
       <form onSubmit={(e) => e.preventDefault()} className={sectionStyle}>
-        <label>Select Group to Increment:</label>
+        <h3>Select Group to Increment:</h3>
         <ul className="flex flex-wrap gap-4 gap-y-2 font-light">
           {groups.map((group) => (
             <li key={uuidv4()}>

@@ -91,6 +91,7 @@ function Body() {
             <label className={labelStyles}>
               Weight:
               <input
+                name="weight"
                 type="number"
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
@@ -100,6 +101,7 @@ function Body() {
             <label className={labelStyles}>
               Reps:
               <input
+                name="repetitions"
                 type="number"
                 value={reps}
                 onChange={(e) => setReps(e.target.value)}
@@ -110,6 +112,7 @@ function Body() {
               <div className="flex-grow">
                 One Rep Max:
                 <input
+                  name="one-rep-max"
                   type="number"
                   className={inputStyles}
                   value={getOrm()}
