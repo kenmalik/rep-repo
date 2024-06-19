@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="px-6 lg:px-56 md:px-32 sm:px-10 py-10 md:py-20">
+      <main className="px-6 py-10 sm:px-10 md:px-32 md:py-20 lg:px-56">
         {workouts.map((workout) => (
           <Workout
             workoutId={workout.id}
@@ -50,19 +50,19 @@ export default function Home() {
 export function AddWorkoutButton({ empty, onClick }) {
   return (
     <div
-      className="flex items-center gap-4 fixed text-green-100
-                        right-4 bottom-4 sm:right-8 sm:bottom-8 md:right-12 md:bottom-8"
+      className="fixed bottom-4 right-4 flex items-center
+                        gap-4 text-green-100 sm:bottom-8 sm:right-8 md:bottom-8 md:right-12"
     >
       {empty && (
-        <p className="italic animate-pulse">
+        <p className="animate-pulse italic">
           Click here to add a workout -&gt;
         </p>
       )}
       <button
         title="Add a workout"
-        className="text-6xl bg-green-600 sm:transition sm:ease-in-out 
-                       sm:duration-75 sm:hover:scale-105 rounded-full flex 
-                       justify-center w-16 h-16 hover:bg-green-700"
+        className="flex h-16 w-16 justify-center 
+                       rounded-full bg-green-600 text-6xl hover:bg-green-700 
+                       sm:transition sm:duration-75 sm:ease-in-out sm:hover:scale-105"
         onClick={onClick}
       >
         +

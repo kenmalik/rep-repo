@@ -2,12 +2,12 @@ import Link from "next/link";
 
 export default function Splash() {
   return (
-    <main className="bg-gray-200 text-gray-800 flex justify-center md:justify-normal h-full">
-      <div className="items-stretch flex flex-col mt-16 md:mt-0 md:flex-row md:ml-24 lg:ml-48 md:self-center">
-        <div className="text-center md:text-right md:my-auto">
-          <div className="font-bold italic text-4xl">REP REPO</div>
+    <main className="flex h-full justify-center bg-gray-200 text-gray-800 md:justify-normal">
+      <div className="mt-16 flex flex-col items-stretch md:ml-24 md:mt-0 md:flex-row md:self-center lg:ml-48">
+        <div className="text-center md:my-auto md:text-right">
+          <div className="text-4xl font-bold italic">REP REPO</div>
         </div>
-        <div className="border-r-gray-500 border-b-2 md:border-r-2 mx-12"></div>
+        <div className="mx-12 border-b-2 border-r-gray-500 md:border-r-2"></div>
         <Buttons />
       </div>
     </main>
@@ -22,7 +22,7 @@ function Buttons() {
   return (
     <div className="py-8">
       <form className="mb-4">
-        <label className="block mb-4">
+        <label className="mb-4 block">
           Username
           <input
             id="username"
@@ -31,7 +31,7 @@ function Buttons() {
             autoComplete="on"
           />
         </label>
-        <label className="block mb-8">
+        <label className="mb-8 block">
           Password
           <input id="password" type="password" className={inputStyles} />
         </label>

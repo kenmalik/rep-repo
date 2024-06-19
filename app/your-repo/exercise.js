@@ -14,20 +14,20 @@ export default function Exercise({
   let [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-white text-gray-800 py-8 px-12">
+    <div className="bg-white px-12 py-8 text-gray-800">
       <div className="flex">
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="h-6 w-8 mr-6"
+          className="mr-6 h-6 w-8"
         >
           {isExpanded ? "^" : ">"}
         </button>
         <div>
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex flex-wrap justify-between gap-4 flex-grow"
+            className="flex flex-grow flex-wrap justify-between gap-4"
           >
-            <div className="flex flex-wrap gap-8 gap-y-6 items-center">
+            <div className="flex flex-wrap items-center gap-8 gap-y-6">
               <div>
                 <b>Exercise:</b>{" "}
                 {isEditable ? (
@@ -36,7 +36,7 @@ export default function Exercise({
                     type="text"
                     value={exercise.name}
                     maxLength={32}
-                    className="bg-gray-200 p-1 w-32"
+                    className="w-32 bg-gray-200 p-1"
                     onChange={(e) => {
                       onNameChange(exercise.id, e.target.value);
                       e.stopPropagation();
@@ -54,7 +54,7 @@ export default function Exercise({
                     type="number"
                     value={exercise.weight}
                     maxLength={4}
-                    className="bg-gray-200 p-1 w-16"
+                    className="w-16 bg-gray-200 p-1"
                     onChange={(e) => {
                       onWeightChange(exercise.id, Number(e.target.value));
                       e.stopPropagation();
@@ -72,7 +72,7 @@ export default function Exercise({
                     type="text"
                     value={exercise.group}
                     maxLength={32}
-                    className="bg-gray-200 p-1 w-32"
+                    className="w-32 bg-gray-200 p-1"
                     onChange={(e) => {
                       onGroupChange(exercise.id, e.target.value);
                       e.stopPropagation();
@@ -87,7 +87,7 @@ export default function Exercise({
               <button
                 onClick={() => onDelete(exercise.id)}
                 title="Delete exercise"
-                className="text-rose-500 hover:underline py-2"
+                className="py-2 text-rose-500 hover:underline"
               >
                 Delete
               </button>
@@ -103,9 +103,9 @@ export default function Exercise({
 function Dropdown({ weight }) {
   const percentages = [60, 65, 75, 80, 85, 90, 95];
   return (
-    <div className="sm:ml-4 md:ml-8 mt-8 text-gray-600">
+    <div className="mt-8 text-gray-600 sm:ml-4 md:ml-8">
       <h2 className="mb-4">Percentages</h2>
-      <div className="flex gap-10 flex-wrap">
+      <div className="flex flex-wrap gap-10">
         {percentages.map((percentage) => (
           <p key={uuidv4()}>
             <b>{percentage}:</b>{" "}

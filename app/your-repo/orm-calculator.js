@@ -19,8 +19,8 @@ export default function OrmCalculator() {
             panelStyles +
             (isPulledUp
               ? undefined
-              : "transition ease-in-out duration-300 sm:hover:-translate-y-1 ") +
-            "h-10 ml-4 sm:ml-12 px-6 py-1 rounded-t-lg font-semibold flex items-start"
+              : "transition duration-300 ease-in-out sm:hover:-translate-y-1 ") +
+            "ml-4 flex h-10 items-start rounded-t-lg px-6 py-1 font-semibold sm:ml-12"
           }
           onClick={() => setIsPulledUp(!isPulledUp)}
         >
@@ -52,7 +52,7 @@ function Body() {
     <>
       {isInfoOpen && (
         <Modal onExit={() => setIsInfoOpen(false)}>
-          <h2 className="font-bold mb-2">One Rep Max Calculator</h2>
+          <h2 className="mb-2 font-bold">One Rep Max Calculator</h2>
           <p className="mb-2">
             This one rep max (ORM) calculator estimates the maximum weight you
             can successfully lift once given a weight and rep count. It uses the
@@ -64,7 +64,7 @@ function Body() {
           </p>
         </Modal>
       )}
-      <div className={panelStyles + "px-12 pt-6 pb-12"}>
+      <div className={panelStyles + "px-12 pb-12 pt-6"}>
         <div className="text-right">
           <IconButton id="info-button" onClick={() => setIsInfoOpen(true)}>
             <InformationCircleIcon />
@@ -73,7 +73,7 @@ function Body() {
         <div className="md:px-10 lg:px-28">
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex flex-wrap sm:flex-nowrap items-end gap-10 md:gap-20 lg:gap-36 justify-between"
+            className="flex flex-wrap items-end justify-between gap-10 sm:flex-nowrap md:gap-20 lg:gap-36"
           >
             <label className={labelStyles}>
               Weight:
@@ -126,7 +126,7 @@ function Body() {
 function IconButton({ children, onClick }) {
   return (
     <button
-      className="text-gray-600 sm:hover:text-gray-950 w-6 h-6"
+      className="h-6 w-6 text-gray-600 sm:hover:text-gray-950"
       onClick={onClick}
     >
       {children}

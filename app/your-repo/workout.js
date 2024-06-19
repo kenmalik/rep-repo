@@ -89,9 +89,9 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
   }
 
   return (
-    <div className="mb-12 med:mb-20 rounded-xl overflow-hidden">
+    <div className="med:mb-20 mb-12 overflow-hidden rounded-xl">
       <form
-        className="bg-gray-300 text-gray-800 pt-8 pb-6 px-12 flex flex-wrap gap-4 justify-between items-center "
+        className="flex flex-wrap items-center justify-between gap-4 bg-gray-300 px-12 pb-6 pt-8 text-gray-800 "
         onSubmit={(e) => {
           e.preventDefault();
         }}
@@ -103,10 +103,10 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="font-bold text-2xl sm:text-3xl px-4 py-2 min-w-0"
+            className="min-w-0 px-4 py-2 text-2xl font-bold sm:text-3xl"
           />
         ) : (
-          <h1 className="font-bold text-2xl sm:text-3xl">{title}</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">{title}</h1>
         )}
         <div className="flex gap-8">
           {isEditing && (
@@ -163,7 +163,7 @@ function AddExercise({ onAdd }) {
 
   return (
     <form
-      className="bg-gray-300 text-gray-800 pt-2 pb-8 flex flex-wrap gap-6 px-12 items-end"
+      className="flex flex-wrap items-end gap-6 bg-gray-300 px-12 pb-8 pt-2 text-gray-800"
       onSubmit={(e) => {
         e.preventDefault();
         onAdd({
@@ -179,7 +179,7 @@ function AddExercise({ onAdd }) {
       }}
     >
       <h2 className="font-bold">Add Exercise:</h2>
-      <div className="flex flex-wrap gap-6 items-end">
+      <div className="flex flex-wrap items-end gap-6">
         <div>
           <label htmlFor="new-workout-name" className="block w-8">
             Name:
