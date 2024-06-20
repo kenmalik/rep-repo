@@ -101,15 +101,44 @@ export default function Exercise({
 }
 
 function Dropdown({ weight }) {
-  const percentages = [60, 65, 75, 80, 85, 90, 95];
+  let [roundInterval, setRoundInterval] = useState(-1);
+  const percentages = [60, 65, 70, 75, 80, 85, 90, 95];
+
+  function handleRoundChange(value) {
+    if (value === "None") {
+      setRoundInterval(-1);
+    } else {
+      setRoundInterval(value);
+    }
+  }
+
+  function round(n, interval) {
+    return Math.ceil(n / interval) * interval;
+  }
+
   return (
-    <div className="mt-8 text-gray-600 sm:ml-4 md:ml-8">
+    <div className="mt-8 text-gray-600">
+      <label>
+        Round to
+        <select
+          onChange={(e) => handleRoundChange(e.target.value)}
+          className="mb-6 ml-2 p-1"
+        >
+          <option>None</option>
+          <option>2.5</option>
+          <option>5</option>
+          <option>10</option>
+        </select>
+      </label>
       <h2 className="mb-4">Percentages</h2>
       <div className="flex flex-wrap gap-10">
         {percentages.map((percentage) => (
           <p key={uuidv4()}>
             <b>{percentage}:</b>{" "}
-            {((percentage / parseFloat(100)) * weight).toFixed(1)}
+            {(roundInterval < 0
+              ? (percentage / parseFloat(100)) * weight
+              : round((percentage / parseFloat(100)) * weight, roundInterval)
+            ).toFixed(1)}
           </p>
         ))}
       </div>
