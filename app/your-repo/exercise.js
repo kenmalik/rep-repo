@@ -14,7 +14,7 @@ export default function Exercise({
   let [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-white px-12 py-8 text-gray-800">
+    <div className="px-12 py-8 text-gray-800">
       <div className="flex">
         <button
           onClick={() => setIsExpanded(!isExpanded)}

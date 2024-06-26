@@ -104,71 +104,77 @@ export default function Workout({
 
   return (
     <div className="med:mb-20 mb-12 overflow-hidden rounded-xl">
-      <form
-        className="flex flex-wrap items-center justify-between gap-4 bg-gray-300 px-12 pb-6 pt-8 text-gray-800 "
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        {" "}
-        {isEditing ? (
-          <input
-            name="workout-title"
-            type="text"
-            value={name}
-            onChange={(e) => setName(workoutId, e.target.value)}
-            className="min-w-0 px-4 py-2 text-2xl font-bold sm:text-3xl"
-          />
-        ) : (
-          <h1 className="text-2xl font-bold sm:text-3xl">{name}</h1>
-        )}
-        <div className="flex gap-8">
-          {isEditing && (
-            <button
-              type="button"
-              title="Delete workout"
-              onClick={() => onDelete(workoutId)}
-              className="text-rose-500 hover:underline"
-            >
-              Delete
-            </button>
+      <div className="bg-gray-300">
+        <form
+          className="flex flex-wrap items-center justify-between gap-4 px-12 pb-6 pt-8 text-gray-800 "
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          {" "}
+          {isEditing ? (
+            <input
+              name="workout-title"
+              type="text"
+              value={name}
+              onChange={(e) => setName(workoutId, e.target.value)}
+              className="min-w-0 px-4 py-2 text-2xl font-bold sm:text-3xl"
+            />
+          ) : (
+            <h1 className="text-2xl font-bold sm:text-3xl">{name}</h1>
           )}
-          <button
-            onClick={() => {
-              setIsEditing(!isEditing);
+          <div className="flex gap-8">
+            {isEditing && (
+              <button
+                type="button"
+                title="Delete workout"
+                onClick={() => onDelete(workoutId)}
+                className="text-rose-500 hover:underline"
+              >
+                Delete
+              </button>
+            )}
+            <button
+              onClick={() => {
+                setIsEditing(!isEditing);
+              }}
+              className="hover:underline"
+              title={
+                isEditing
+                  ? "Save changes to workout"
+                  : "Make changes to workout"
+              }
+            >
+              {isEditing ? "Finish" : "Edit"}
+            </button>
+          </div>
+        </form>
+        {!isEditing && (
+          <Toolbar
+            onIncrementAll={(amount) => {
+              handleIncrementAll(amount);
             }}
-            className="hover:underline"
-            title={
-              isEditing ? "Save changes to workout" : "Make changes to workout"
-            }
-          >
-            {isEditing ? "Finish" : "Edit"}
-          </button>
-        </div>
-      </form>
-      {!isEditing && (
-        <Toolbar
-          onIncrementAll={(amount) => {
-            handleIncrementAll(amount);
-          }}
-          onIncrementGroup={(amount, group) => {
-            handleIncrementGroup(amount, group);
-          }}
-          exercises={exercises}
-        />
-      )}
+            onIncrementGroup={(amount, group) => {
+              handleIncrementGroup(amount, group);
+            }}
+            exercises={exercises}
+          />
+        )}
+      </div>
       {isEditing && <AddExercise onAdd={handleAddExercise} />}
-      {exercises.map((exercise) => (
-        <Exercise
-          key={exercise.id}
-          isEditable={isEditing}
-          onDelete={handleDeleteExercise}
-          exercise={exercise}
-          onNameChange={handleSetName}
-          onWeightChange={handleSetWeight}
-          onGroupChange={handleSetGroup}
-        />
-      ))}
+      <div className="bg-white">
+        {exercises.map((exercise) => (
+          <Exercise
+            key={exercise.id}
+            isEditable={isEditing}
+            onDelete={handleDeleteExercise}
+            exercise={exercise}
+            onNameChange={handleSetName}
+            onWeightChange={handleSetWeight}
+            onGroupChange={handleSetGroup}
+          />
+        ))}
+      </div>
     </div>
   );
 }
