@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  @apply text-white bg-gray-800 h-full
+  @apply h-full bg-gray-800 text-white;
 }
 
 @layer utilities {
@@ -17,7 +17,7 @@ body {
 }
 
 @media (max-width: 623px) {
-    html {
-        font-size: 15px;
-    }
+  html {
+    font-size: 15px;
+  }
 }

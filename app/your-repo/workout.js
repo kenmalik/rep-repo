@@ -4,22 +4,32 @@ import { v4 as uuidv4 } from "uuid";
 import Exercise from "./exercise.js";
 import Toolbar from "./toolbar.js";
 
-export default function Workout({ name, exercises, onDelete, workoutId }) {
-  let [exerciseList, setExerciseList] = useState(exercises);
-  let [isEditing, setIsEditing] = useState(true);
-  let [title, setTitle] = useState(name);
+export default function Workout({
+  name,
+  exercises,
+  setName,
+  setExercises,
+  onDelete,
+  workoutId,
+}) {
+  let [isEditing, setIsEditing] = useState(false);
 
   function handleAddExercise(exercise) {
-    setExerciseList([...exerciseList, exercise]);
+    setExercises(workoutId, [...exercises, exercise]);
   }
 
   function handleDeleteExercise(id) {
-    setExerciseList(exerciseList.filter((exercise) => exercise.id !== id));
+    setExercises(
+      workoutId,
+      exercises.filter((exercise) => exercise.id !== id),
+    );
   }
 
   function handleIncrementAll(amount) {
-    setExerciseList(
-      exerciseList.map((exercise) => {
+    console.log(`Incrementing by ${amount}`);
+    setExercises(
+      workoutId,
+      exercises.map((exercise) => {
         return {
           ...exercise,
           weight: exercise.weight + amount,
@@ -29,8 +39,9 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
   }
 
   function handleIncrementGroup(amount, group) {
-    setExerciseList(
-      exerciseList.map((exercise) => {
+    setExercises(
+      workoutId,
+      exercises.map((exercise) => {
         if (exercise.group === group) {
           return {
             ...exercise,
@@ -44,8 +55,9 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
   }
 
   function handleSetName(id, name) {
-    setExerciseList(
-      exerciseList.map((exercise) => {
+    setExercises(
+      workoutId,
+      exercises.map((exercise) => {
         if (exercise.id === id) {
           return {
             ...exercise,
@@ -59,8 +71,9 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
   }
 
   function handleSetWeight(id, weight) {
-    setExerciseList(
-      exerciseList.map((exercise) => {
+    setExercises(
+      workoutId,
+      exercises.map((exercise) => {
         if (exercise.id === id) {
           return {
             ...exercise,
@@ -74,8 +87,9 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
   }
 
   function handleSetGroup(id, group) {
-    setExerciseList(
-      exerciseList.map((exercise) => {
+    setExercises(
+      workoutId,
+      exercises.map((exercise) => {
         if (exercise.id === id) {
           return {
             ...exercise,
@@ -89,9 +103,9 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
   }
 
   return (
-    <div className="mb-12 med:mb-20 rounded-xl overflow-hidden">
+    <div className="med:mb-20 mb-12 overflow-hidden rounded-xl">
       <form
-        className="bg-gray-300 text-gray-800 pt-8 pb-6 px-12 flex flex-wrap gap-4 justify-between items-center "
+        className="flex flex-wrap items-center justify-between gap-4 bg-gray-300 px-12 pb-6 pt-8 text-gray-800 "
         onSubmit={(e) => {
           e.preventDefault();
         }}
@@ -101,12 +115,12 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
           <input
             name="workout-title"
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="font-bold text-2xl sm:text-3xl px-4 py-2 min-w-0"
+            value={name}
+            onChange={(e) => setName(workoutId, e.target.value)}
+            className="min-w-0 px-4 py-2 text-2xl font-bold sm:text-3xl"
           />
         ) : (
-          <h1 className="font-bold text-2xl sm:text-3xl">{title}</h1>
+          <h1 className="text-2xl font-bold sm:text-3xl">{name}</h1>
         )}
         <div className="flex gap-8">
           {isEditing && (
@@ -120,7 +134,9 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
             </button>
           )}
           <button
-            onClick={() => setIsEditing(!isEditing)}
+            onClick={() => {
+              setIsEditing(!isEditing);
+            }}
             className="hover:underline"
             title={
               isEditing ? "Save changes to workout" : "Make changes to workout"
@@ -132,13 +148,17 @@ export default function Workout({ name, exercises, onDelete, workoutId }) {
       </form>
       {!isEditing && (
         <Toolbar
-          onIncrementAll={handleIncrementAll}
-          onIncrementGroup={handleIncrementGroup}
-          exerciseList={exerciseList}
+          onIncrementAll={(amount) => {
+            handleIncrementAll(amount);
+          }}
+          onIncrementGroup={(amount, group) => {
+            handleIncrementGroup(amount, group);
+          }}
+          exercises={exercises}
         />
       )}
       {isEditing && <AddExercise onAdd={handleAddExercise} />}
-      {exerciseList.map((exercise) => (
+      {exercises.map((exercise) => (
         <Exercise
           key={exercise.id}
           isEditable={isEditing}
@@ -163,14 +183,13 @@ function AddExercise({ onAdd }) {
 
   return (
     <form
-      className="bg-gray-300 text-gray-800 pt-2 pb-8 flex flex-wrap gap-6 px-12 items-end"
+      className="flex flex-wrap items-end gap-6 bg-gray-300 px-12 pb-8 pt-2 text-gray-800"
       onSubmit={(e) => {
         e.preventDefault();
         onAdd({
           name: name,
           weight: Number(weight),
           group: group,
-          isEditable: false,
           id: uuidv4(),
         });
         setName("");
@@ -179,7 +198,7 @@ function AddExercise({ onAdd }) {
       }}
     >
       <h2 className="font-bold">Add Exercise:</h2>
-      <div className="flex flex-wrap gap-6 items-end">
+      <div className="flex flex-wrap items-end gap-6">
         <div>
           <label htmlFor="new-workout-name" className="block w-8">
             Name:

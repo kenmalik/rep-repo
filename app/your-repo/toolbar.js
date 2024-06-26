@@ -4,17 +4,17 @@ import { useState } from "react";
 export default function Toolbar({
   onIncrementAll,
   onIncrementGroup,
-  exerciseList,
+  exercises,
 }) {
   let [selection, setSelection] = useState("");
 
-  const empty = exerciseList.length === 0;
+  const empty = exercises.length === 0;
 
   return (
     <>
-      <div className="bg-gray-300 text-gray-700 pb-6 sm:flex gap-8 px-12 items-center">
-        <p className="mb-2 sm:mb-0 font-semibold">Actions:</p>
-        <ul className="flex flex-wrap gap-8 gap-y-4 font-light m-0 p-0">
+      <div className="items-center gap-8 bg-gray-300 px-12 pb-6 text-gray-700 sm:flex">
+        <p className="mb-2 font-semibold sm:mb-0">Actions:</p>
+        <ul className="m-0 flex flex-wrap gap-8 gap-y-4 p-0 font-light">
           <li>
             <MenuButton
               name="increment all"
@@ -41,7 +41,7 @@ export default function Toolbar({
       </div>
       {selection === "increment group" && (
         <GroupSelector
-          groups={[...new Set(exerciseList.map((exercise) => exercise.group))]}
+          groups={[...new Set(exercises.map((exercise) => exercise.group))]}
           onIncrement={onIncrementGroup}
         />
       )}
@@ -100,7 +100,7 @@ function IncrementAll({ onIncrement }) {
   const buttonsDisabled = incrementAmount <= 0;
 
   return (
-    <div className="bg-gray-300 text-gray-700 pb-6 flex flex-wrap gap-12 gap-y-4 px-12 font-semibold items-center">
+    <div className="flex flex-wrap items-center gap-12 gap-y-4 bg-gray-300 px-12 pb-6 font-semibold text-gray-700">
       <form onSubmit={(e) => e.preventDefault()}>
         <label className={sectionStyle}>
           Amount:
@@ -148,7 +148,7 @@ function GroupSelector({ groups, onIncrement }) {
   const buttonsDisabled = incrementAmount <= 0;
 
   return (
-    <div className="bg-gray-300 text-gray-700 pb-6 flex flex-wrap gap-12 gap-y-4 px-12 font-semibold items-center">
+    <div className="flex flex-wrap items-center gap-12 gap-y-4 bg-gray-300 px-12 pb-6 font-semibold text-gray-700">
       <form onSubmit={(e) => e.preventDefault()}>
         <label className={sectionStyle}>
           Amount:

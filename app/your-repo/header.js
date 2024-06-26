@@ -1,14 +1,28 @@
-import Link from "next/link";
+import { useRouter } from "next/navigation.js";
+import { getAuth, signOut } from "firebase/auth";
 
 export default function Header() {
+  const router = useRouter();
+
+  function handleSignOut() {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        router.push("/");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   return (
     <div
-      className="bg-gray-200 text-gray-800 py-4 sm:py-6 px-24 flex items-center
-        justify-center sm:justify-between"
+      className="flex items-center justify-center bg-gray-200 px-24 py-4 text-gray-800
+        sm:justify-between sm:py-6"
     >
-      <div className="text-3xl sm:text-4xl font-extrabold italic">REP REPO</div>
+      <div className="text-3xl font-extrabold italic sm:text-4xl">REP REPO</div>
       <div className="hidden sm:block">
-        <Link href="/">Log out</Link>
+        <button onClick={() => handleSignOut()}>Log out</button>
       </div>
     </div>
   );

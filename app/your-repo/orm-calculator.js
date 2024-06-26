@@ -1,5 +1,9 @@
 import { useState } from "react";
 import Modal from "./modal";
+import {
+  InformationCircleIcon,
+  DocumentDuplicateIcon,
+} from "@heroicons/react/24/outline";
 
 const panelStyles = "bg-gray-200 text-gray-800 ";
 
@@ -15,8 +19,8 @@ export default function OrmCalculator() {
             panelStyles +
             (isPulledUp
               ? undefined
-              : "transition ease-in-out duration-300 sm:hover:-translate-y-1 ") +
-            "h-10 ml-4 sm:ml-12 px-6 py-1 rounded-t-lg font-semibold flex items-start"
+              : "transition duration-300 ease-in-out sm:hover:-translate-y-1 ") +
+            "ml-4 flex h-10 items-start rounded-t-lg px-6 py-1 font-semibold sm:ml-12"
           }
           onClick={() => setIsPulledUp(!isPulledUp)}
         >
@@ -48,7 +52,7 @@ function Body() {
     <>
       {isInfoOpen && (
         <Modal onExit={() => setIsInfoOpen(false)}>
-          <h2 className="font-bold mb-2">One Rep Max Calculator</h2>
+          <h2 className="mb-2 font-bold">One Rep Max Calculator</h2>
           <p className="mb-2">
             This one rep max (ORM) calculator estimates the maximum weight you
             can successfully lift once given a weight and rep count. It uses the
@@ -60,33 +64,16 @@ function Body() {
           </p>
         </Modal>
       )}
-      <div className={panelStyles + "px-12 pt-6 pb-12"}>
+      <div className={panelStyles + "px-12 pb-12 pt-6"}>
         <div className="text-right">
-          {/* Info button */}
-          <button
-            className="w-6 h-6 text-gray-600 sm:hover:text-gray-950"
-            onClick={() => setIsInfoOpen(true)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"
-              />
-            </svg>
-          </button>
+          <IconButton id="info-button" onClick={() => setIsInfoOpen(true)}>
+            <InformationCircleIcon />
+          </IconButton>
         </div>
         <div className="md:px-10 lg:px-28">
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="flex flex-wrap sm:flex-nowrap items-end gap-10 md:gap-20 lg:gap-36 justify-between"
+            className="flex flex-wrap items-end justify-between gap-10 sm:flex-nowrap md:gap-20 lg:gap-36"
           >
             <label className={labelStyles}>
               Weight:
@@ -119,33 +106,30 @@ function Body() {
                   readOnly
                 />
               </div>
-              {/* Copy button */}
-              <button
-                className="text-gray-600 sm:hover:text-gray-950"
+              <IconButton
+                id="copy-button"
                 onClick={() => {
                   navigator.clipboard.writeText(getOrm());
                   alert("One rep max copied to clipboard!");
                 }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75"
-                  />
-                </svg>
-              </button>
+                <DocumentDuplicateIcon />
+              </IconButton>
             </label>
           </form>
         </div>
       </div>
     </>
+  );
+}
+
+function IconButton({ children, onClick }) {
+  return (
+    <button
+      className="h-6 w-6 text-gray-600 sm:hover:text-gray-950"
+      onClick={onClick}
+    >
+      {children}
+    </button>
   );
 }
