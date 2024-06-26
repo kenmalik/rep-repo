@@ -3,11 +3,28 @@
 import Header from "./header.js";
 import Workout from "./workout.js";
 import OrmCalculator from "./orm-calculator.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation.js";
 
 export default function Home() {
   let [workouts, setWorkouts] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    try {
+      const auth = getAuth();
+      onAuthStateChanged(auth, (user) => {
+        if (!user) {
+          router.push("/");
+        }
+      });
+    } catch (e) {
+      router.push("/");
+    }
+  }, []);
 
   function handleAddWorkout() {
     setWorkouts([
