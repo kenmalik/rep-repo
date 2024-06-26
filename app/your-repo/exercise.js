@@ -123,6 +123,8 @@ function Dropdown({ weight }) {
         <select
           onChange={(e) => handleRoundChange(e.target.value)}
           className="mb-6 ml-2 p-1"
+          id="round-amount"
+          name="round-amount"
         >
           <option>None</option>
           <option>2.5</option>

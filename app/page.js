@@ -126,7 +126,7 @@ function Buttons() {
               Log in
             </button>
           )}
-          <label className="mb-3 mt-12 block">
+          <label className="mb-3 mt-12 block" htmlFor="new-user-toggle">
             {isSigningUp ? "Have an account? " : "New user? "}
           </label>
           <button
@@ -135,6 +135,7 @@ function Buttons() {
               e.preventDefault();
               setIsSigningUp(!isSigningUp);
             }}
+            id="new-user-toggle"
           >
             {isSigningUp ? "Go to sign in" : "Create account"}
           </button>

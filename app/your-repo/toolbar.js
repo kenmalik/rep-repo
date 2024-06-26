@@ -4,11 +4,11 @@ import { useState } from "react";
 export default function Toolbar({
   onIncrementAll,
   onIncrementGroup,
-  exerciseList,
+  exercises,
 }) {
   let [selection, setSelection] = useState("");
 
-  const empty = exerciseList.length === 0;
+  const empty = exercises.length === 0;
 
   return (
     <>
@@ -41,7 +41,7 @@ export default function Toolbar({
       </div>
       {selection === "increment group" && (
         <GroupSelector
-          groups={[...new Set(exerciseList.map((exercise) => exercise.group))]}
+          groups={[...new Set(exercises.map((exercise) => exercise.group))]}
           onIncrement={onIncrementGroup}
         />
       )}

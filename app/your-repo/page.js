@@ -6,7 +6,8 @@ import OrmCalculator from "./orm-calculator.js";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { doc, getFirestore, getDoc, setDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { useRouter } from "next/navigation.js";
 
 export default function Home() {
@@ -16,17 +17,40 @@ export default function Home() {
   useEffect(() => {
     try {
       const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        if (!user) {
-          router.push("/");
-        }
-      });
+      const uid = auth.currentUser.uid;
+      if (!uid) {
+        router.push("/");
+      }
+      loadWorkouts(uid);
     } catch (e) {
       router.push("/");
     }
   }, []);
 
+  async function loadWorkouts(uid) {
+    const firestore = getFirestore();
+    const dbWorkouts = doc(firestore, `users/${uid}/data/workouts`);
+    const snapshot = await getDoc(dbWorkouts);
+    if (snapshot.exists()) {
+      setWorkouts(snapshot.data().workouts);
+    }
+  }
+
+  function saveWorkouts() {
+    const auth = getAuth();
+    const uid = auth.currentUser.uid;
+
+    const firestore = getFirestore();
+    const dbWorkouts = doc(firestore, `users/${uid}/data/workouts`);
+    const docData = {
+      user: uid,
+      workouts: workouts,
+    };
+    setDoc(dbWorkouts, docData);
+  }
+
   function handleAddWorkout() {
+    console.log("Workouts", JSON.stringify(workouts));
     setWorkouts([
       ...workouts,
       {
@@ -41,23 +65,63 @@ export default function Home() {
     setWorkouts(workouts.filter((workout) => workout.id !== id));
   }
 
+  function handleEditWorkoutName(id, name) {
+    setWorkouts(
+      workouts.map((workout) => {
+        if (workout.id === id) {
+          return {
+            ...workout,
+            name: name,
+          };
+        } else {
+          return workout;
+        }
+      }),
+    );
+  }
+
+  function handleEditWorkoutExercises(id, exercises) {
+    setWorkouts(
+      workouts.map((workout) => {
+        if (workout.id === id) {
+          return {
+            ...workout,
+            exercises: exercises,
+          };
+        } else {
+          return workout;
+        }
+      }),
+    );
+  }
+
   return (
     <>
       <Header />
       <main className="px-6 py-10 sm:px-10 md:px-32 md:py-20 lg:px-56">
+        <button
+          className="mb-12 w-full bg-slate-950 px-6 py-1 text-white active:bg-slate-600"
+          onClick={saveWorkouts}
+        >
+          Save Changes
+        </button>
         {workouts.map((workout) => (
           <Workout
             workoutId={workout.id}
             name={workout.name}
             key={workout.id}
             exercises={workout.exercises}
+            setName={handleEditWorkoutName}
+            setExercises={handleEditWorkoutExercises}
             onDelete={handleDeleteWorkout}
           />
         ))}
       </main>
       <AddWorkoutButton
         empty={workouts.length === 0}
-        onClick={handleAddWorkout}
+        onClick={() => {
+          handleAddWorkout();
+        }}
       />
       <OrmCalculator />
     </>
