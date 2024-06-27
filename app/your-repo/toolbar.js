@@ -22,7 +22,7 @@ export default function Toolbar({
 
   return (
     <>
-      <div className="mb-6 items-center gap-8 text-gray-700 sm:flex">
+      <div className={"items-center gap-8 text-gray-700 sm:flex"}>
         <h2 className="mb-2 font-semibold sm:mb-0">Actions:</h2>
         <div className="m-0 flex flex-wrap content-stretch gap-8 gap-y-4 p-0 font-light">
           <ToggleButton
@@ -53,17 +53,19 @@ export default function Toolbar({
           </ToggleButton>
         </div>
       </div>
-      <div className="font-semibold text-gray-700">
-        {selection === "increment group" && (
-          <GroupSelector
-            groups={[...new Set(exercises.map((exercise) => exercise.group))]}
-            onIncrement={onIncrementGroup}
-          />
-        )}
-        {selection === "increment all" && (
-          <IncrementAll onIncrement={onIncrementAll} />
-        )}
-      </div>
+      {selection !== "" && (
+        <div className="mt-6 font-semibold text-gray-700">
+          {selection === "increment group" && (
+            <GroupSelector
+              groups={[...new Set(exercises.map((exercise) => exercise.group))]}
+              onIncrement={onIncrementGroup}
+            />
+          )}
+          {selection === "increment all" && (
+            <IncrementAll onIncrement={onIncrementAll} />
+          )}
+        </div>
+      )}
     </>
   );
 }
