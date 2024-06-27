@@ -65,10 +65,7 @@ function Buttons() {
   function createUser(email, password) {
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed up
-        const user = userCredential.user;
-        console.log("User created", user.uid);
+      .then(() => {
         router.push("/your-repo");
       })
       .catch((error) => {

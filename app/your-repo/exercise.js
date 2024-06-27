@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+
 export default function Exercise({
   exercise,
   onDelete,
@@ -14,13 +16,13 @@ export default function Exercise({
   let [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="bg-white px-12 py-8 text-gray-800">
-      <div className="flex">
+    <div className="px-12 py-8 text-gray-800">
+      <div className="flex items-center">
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="mr-6 h-6 w-8"
+          className="mr-6 h-4 w-4 flex-shrink-0"
         >
-          {isExpanded ? "^" : ">"}
+          {isExpanded ? <ChevronDownIcon /> : <ChevronRightIcon />}
         </button>
         <div>
           <form
@@ -93,16 +95,18 @@ export default function Exercise({
               </button>
             )}
           </form>
-          {isExpanded && <Dropdown weight={exercise.weight} />}
         </div>
       </div>
+      {isExpanded && <Dropdown weight={exercise.weight} />}
     </div>
   );
 }
 
 function Dropdown({ weight }) {
   let [roundInterval, setRoundInterval] = useState(-1);
-  const percentages = [60, 65, 70, 75, 80, 85, 90, 95];
+  const percentages = [
+    5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95,
+  ];
 
   function handleRoundChange(value) {
     if (value === "None") {

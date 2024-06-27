@@ -12,7 +12,7 @@ export default function Toolbar({
 
   return (
     <>
-      <div className="items-center gap-8 bg-gray-300 px-12 pb-6 text-gray-700 sm:flex">
+      <div className="items-center gap-8 text-gray-700 sm:flex">
         <p className="mb-2 font-semibold sm:mb-0">Actions:</p>
         <ul className="m-0 flex flex-wrap gap-8 gap-y-4 p-0 font-light">
           <li>
