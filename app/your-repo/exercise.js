@@ -4,6 +4,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
+import { ToggleButton } from "./toggle-button";
 
 export default function Exercise({
   exercise,
@@ -103,9 +104,12 @@ export default function Exercise({
 }
 
 function Dropdown({ weight }) {
-  let [roundInterval, setRoundInterval] = useState(-1);
+  const [roundInterval, setRoundInterval] = useState(-1);
+  const [isBarbell, setIsBarbell] = useState(false);
+
   const percentages = [
     5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95,
+    100,
   ];
 
   function handleRoundChange(value) {
@@ -116,35 +120,58 @@ function Dropdown({ weight }) {
     }
   }
 
+  function getPercentage(amount) {
+    let percent = (amount / parseFloat(100)) * weight;
+
+    if (isBarbell) {
+      percent = (percent - 45) / 2;
+    }
+
+    if (roundInterval > 0) {
+      percent = round(percent, roundInterval);
+    }
+
+    return percent > 0 ? percent : 0;
+  }
+
   function round(n, interval) {
     return Math.ceil(n / interval) * interval;
   }
 
   return (
     <div className="mt-8 text-gray-600">
-      <label>
-        Round to
-        <select
-          onChange={(e) => handleRoundChange(e.target.value)}
-          className="mb-6 ml-2 p-1"
-          id="round-amount"
-          name="round-amount"
+      <div className="mb-6 flex items-center justify-between gap-2">
+        <label htmlFor="round-amount">
+          Round to
+          <select
+            onChange={(e) => handleRoundChange(e.target.value)}
+            className="ml-2 p-1"
+            id="round-amount"
+            name="round-amount"
+          >
+            <option>None</option>
+            <option>2.5</option>
+            <option>5</option>
+            <option>10</option>
+          </select>
+        </label>
+        <ToggleButton
+          isToggled={isBarbell}
+          activeTitle="Doing a barbell workout?"
+          onClick={(e) => {
+            setIsBarbell(!isBarbell);
+            e.stopPropagation();
+          }}
         >
-          <option>None</option>
-          <option>2.5</option>
-          <option>5</option>
-          <option>10</option>
-        </select>
-      </label>
+          Barbell
+        </ToggleButton>
+      </div>
       <h2 className="mb-4">Percentages</h2>
       <div className="flex flex-wrap gap-10">
         {percentages.map((percentage) => (
           <p key={uuidv4()}>
-            <b>{percentage}:</b>{" "}
-            {(roundInterval < 0
-              ? (percentage / parseFloat(100)) * weight
-              : round((percentage / parseFloat(100)) * weight, roundInterval)
-            ).toFixed(1)}
+            <b>{percentage}:</b>
+            {" " + getPercentage(percentage).toFixed(1)}
           </p>
         ))}
       </div>
