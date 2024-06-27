@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 
+import { ToggleButton } from "./toggle-button";
+
 export default function Toolbar({
   onIncrementAll,
   onIncrementGroup,
@@ -8,85 +10,63 @@ export default function Toolbar({
 }) {
   let [selection, setSelection] = useState("");
 
-  const empty = exercises.length === 0;
+  function handleToggle(name) {
+    if (selection !== name) {
+      setSelection(name);
+    } else {
+      setSelection("");
+    }
+  }
+
+  const isExercisesEmpty = exercises.length === 0;
 
   return (
     <>
-      <div className="items-center gap-8 text-gray-700 sm:flex">
-        <p className="mb-2 font-semibold sm:mb-0">Actions:</p>
-        <ul className="m-0 flex flex-wrap gap-8 gap-y-4 p-0 font-light">
-          <li>
-            <MenuButton
-              name="increment all"
-              activeTitle="Increment weight for all exercises"
-              setSelection={setSelection}
-              disabled={empty}
-              currentSelection={selection}
-            >
-              Increment All
-            </MenuButton>
-          </li>
-          <li>
-            <MenuButton
-              name="increment group"
-              activeTitle="Increment weight by group"
-              setSelection={setSelection}
-              disabled={empty}
-              currentSelection={selection}
-            >
-              Increment Group
-            </MenuButton>
-          </li>
-        </ul>
+      <div className={"items-center gap-8 text-gray-700 sm:flex"}>
+        <h2 className="mb-2 font-semibold sm:mb-0">Actions:</h2>
+        <div className="m-0 flex flex-wrap content-stretch gap-8 gap-y-4 p-0 font-light">
+          <ToggleButton
+            disabledTitle="Add an exercise to perform actions"
+            activeTitle="Increment weight for all exercises"
+            isToggled={selection === "increment all"}
+            onClick={(e) => {
+              handleToggle("increment all");
+              e.stopPropagation();
+            }}
+            disabled={isExercisesEmpty}
+            className="w-full sm:w-fit"
+          >
+            Increment All
+          </ToggleButton>
+          <ToggleButton
+            disabledTitle="Add an exercise to perform actions"
+            activeTitle="Increment weight by group"
+            isToggled={selection === "increment group"}
+            onClick={(e) => {
+              handleToggle("increment group");
+              e.stopPropagation();
+            }}
+            disabled={isExercisesEmpty}
+            className="w-full sm:w-fit"
+          >
+            Increment Group
+          </ToggleButton>
+        </div>
       </div>
-      {selection === "increment group" && (
-        <GroupSelector
-          groups={[...new Set(exercises.map((exercise) => exercise.group))]}
-          onIncrement={onIncrementGroup}
-        />
-      )}
-      {selection === "increment all" && (
-        <IncrementAll onIncrement={onIncrementAll} />
+      {selection !== "" && (
+        <div className="mt-6 font-semibold text-gray-700">
+          {selection === "increment group" && (
+            <GroupSelector
+              groups={[...new Set(exercises.map((exercise) => exercise.group))]}
+              onIncrement={onIncrementGroup}
+            />
+          )}
+          {selection === "increment all" && (
+            <IncrementAll onIncrement={onIncrementAll} />
+          )}
+        </div>
       )}
     </>
-  );
-}
-
-function MenuButton({
-  name,
-  activeTitle,
-  setSelection,
-  currentSelection,
-  disabled,
-  children,
-}) {
-  const toggled = currentSelection === name;
-
-  const buttonStyles = "py-1.5 px-2 text-sm sm:text-base sm:px-4 rounded-xl ";
-  const activeButtonStyles =
-    buttonStyles +
-    "hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
-  const disabledButtonStyles = buttonStyles + "text-gray-500 ";
-
-  return (
-    <button
-      title={disabled ? "Add an exercise to perform actions" : activeTitle}
-      onClick={(e) => {
-        setSelection(toggled ? undefined : name);
-        e.stopPropagation();
-      }}
-      disabled={disabled}
-      className={
-        disabled
-          ? disabledButtonStyles
-          : activeButtonStyles +
-            (toggled
-              ? "bg-neutral-800 text-gray-100 hover:bg-gray-900"
-              : undefined)
-      }
-    >
-      {children}
-    </button>
   );
 }
 
@@ -100,7 +80,7 @@ function IncrementAll({ onIncrement }) {
   const buttonsDisabled = incrementAmount <= 0;
 
   return (
-    <div className="flex flex-wrap items-center gap-12 gap-y-4 bg-gray-300 px-12 pb-6 font-semibold text-gray-700">
+    <div className="flex gap-4">
       <form onSubmit={(e) => e.preventDefault()}>
         <label className={sectionStyle}>
           Amount:
@@ -139,7 +119,7 @@ function IncrementAll({ onIncrement }) {
 function GroupSelector({ groups, onIncrement }) {
   let [incrementAmount, setIncrementAmount] = useState(0);
 
-  const sectionStyle = "flex items-center gap-4";
+  const sectionStyle = "flex items-center flex-wrap gap-4";
   const buttonStyles = "text-sm sm:text-base py-1.5 px-3 rounded-xl ";
   const activeButtonStyles =
     buttonStyles +
@@ -148,8 +128,8 @@ function GroupSelector({ groups, onIncrement }) {
   const buttonsDisabled = incrementAmount <= 0;
 
   return (
-    <div className="flex flex-wrap items-center gap-12 gap-y-4 bg-gray-300 px-12 pb-6 font-semibold text-gray-700">
-      <form onSubmit={(e) => e.preventDefault()}>
+    <div className="block sm:flex sm:flex-wrap sm:gap-x-16 sm:gap-y-4">
+      <form onSubmit={(e) => e.preventDefault()} className="mb-4 sm:mb-0">
         <label className={sectionStyle}>
           Amount:
           <input
@@ -162,34 +142,37 @@ function GroupSelector({ groups, onIncrement }) {
           />
         </label>
       </form>
-      <form onSubmit={(e) => e.preventDefault()} className={sectionStyle}>
-        <h3>Select Group to Increment:</h3>
-        <ul className="flex flex-wrap gap-4 gap-y-2 font-light">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className={"block sm:flex sm:flex-wrap sm:items-center sm:gap-4"}
+      >
+        <h3 className="mb-2 sm:mb-0">Group to Increment:</h3>
+        <div className="flex-wrap gap-4 gap-y-2 font-light sm:flex">
           {groups.map((group) => (
-            <li key={uuidv4()}>
-              <button
-                title={
-                  buttonsDisabled
-                    ? "Please select amount to increment by"
-                    : 'Increment group "' +
-                      group +
-                      '" by ' +
-                      Number(incrementAmount)
-                }
-                onClick={(e) => {
-                  onIncrement(Number(incrementAmount), group);
-                  e.stopPropagation();
-                }}
-                className={
-                  buttonsDisabled ? disabledButtonStyles : activeButtonStyles
-                }
-                disabled={buttonsDisabled}
-              >
-                {group}
-              </button>
-            </li>
+            <button
+              key={uuidv4()}
+              title={
+                buttonsDisabled
+                  ? "Please select amount to increment by"
+                  : 'Increment group "' +
+                    group +
+                    '" by ' +
+                    Number(incrementAmount)
+              }
+              onClick={(e) => {
+                onIncrement(Number(incrementAmount), group);
+                e.stopPropagation();
+              }}
+              className={
+                "w-full sm:w-fit " +
+                (buttonsDisabled ? disabledButtonStyles : activeButtonStyles)
+              }
+              disabled={buttonsDisabled}
+            >
+              {group}
+            </button>
           ))}
-        </ul>
+        </div>
       </form>
     </div>
   );
