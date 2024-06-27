@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 import { useState } from "react";
 
+import { ToggleButton } from "./toggle-button";
+
 export default function Toolbar({
   onIncrementAll,
   onIncrementGroup,
@@ -8,7 +10,15 @@ export default function Toolbar({
 }) {
   let [selection, setSelection] = useState("");
 
-  const empty = exercises.length === 0;
+  function handleToggle(name) {
+    if (selection !== name) {
+      setSelection(name);
+    } else {
+      setSelection("");
+    }
+  }
+
+  const isExercisesEmpty = exercises.length === 0;
 
   return (
     <>
@@ -16,26 +26,32 @@ export default function Toolbar({
         <p className="mb-2 font-semibold sm:mb-0">Actions:</p>
         <ul className="m-0 flex flex-wrap gap-8 gap-y-4 p-0 font-light">
           <li>
-            <MenuButton
-              name="increment all"
+            <ToggleButton
+              disabledTitle="Add an exercise to perform actions"
               activeTitle="Increment weight for all exercises"
-              setSelection={setSelection}
-              disabled={empty}
-              currentSelection={selection}
+              isToggled={selection === "increment all"}
+              onClick={(e) => {
+                handleToggle("increment all");
+                e.stopPropagation();
+              }}
+              disabled={isExercisesEmpty}
             >
               Increment All
-            </MenuButton>
+            </ToggleButton>
           </li>
           <li>
-            <MenuButton
-              name="increment group"
+            <ToggleButton
+              disabledTitle="Add an exercise to perform actions"
               activeTitle="Increment weight by group"
-              setSelection={setSelection}
-              disabled={empty}
-              currentSelection={selection}
+              isToggled={selection === "increment group"}
+              onClick={(e) => {
+                handleToggle("increment group");
+                e.stopPropagation();
+              }}
+              disabled={isExercisesEmpty}
             >
               Increment Group
-            </MenuButton>
+            </ToggleButton>
           </li>
         </ul>
       </div>
@@ -49,44 +65,6 @@ export default function Toolbar({
         <IncrementAll onIncrement={onIncrementAll} />
       )}
     </>
-  );
-}
-
-function MenuButton({
-  name,
-  activeTitle,
-  setSelection,
-  currentSelection,
-  disabled,
-  children,
-}) {
-  const toggled = currentSelection === name;
-
-  const buttonStyles = "py-1.5 px-2 text-sm sm:text-base sm:px-4 rounded-xl ";
-  const activeButtonStyles =
-    buttonStyles +
-    "hover:bg-gray-200 active:bg-neutral-800 active:text-gray-100 ";
-  const disabledButtonStyles = buttonStyles + "text-gray-500 ";
-
-  return (
-    <button
-      title={disabled ? "Add an exercise to perform actions" : activeTitle}
-      onClick={(e) => {
-        setSelection(toggled ? undefined : name);
-        e.stopPropagation();
-      }}
-      disabled={disabled}
-      className={
-        disabled
-          ? disabledButtonStyles
-          : activeButtonStyles +
-            (toggled
-              ? "bg-neutral-800 text-gray-100 hover:bg-gray-900"
-              : undefined)
-      }
-    >
-      {children}
-    </button>
   );
 }
 
